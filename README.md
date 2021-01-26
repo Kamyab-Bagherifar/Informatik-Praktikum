@@ -1,10 +1,12 @@
-# Template-Repository für folgende Aufgaben (siehe Moodle)
+# Template-Repository für folgende Aufgaben
 - ADT List in Java
 - Stack und Queue
 - ADT Set über ADT List implementieren
 - ADT Map mit ListSet implementieren
 - ADT Set und ADT Map mit Tree implementieren
 - Graphen
+
+Im Paket fpinjava finden Sie diverse Klassen aus dem Lehrbuch wie z.B. Result.
 
 ## Anpassung an Maven
 
