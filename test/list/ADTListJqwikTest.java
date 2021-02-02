@@ -1,6 +1,6 @@
 package list;
 
-import fpinjava.Function;// hier Ihr Interface Function importieren!
+import fpinjava.Function;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.IntRange;
 import tuple.Tuple;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static list.JqwikUtils.unEqualIntLists;
 import static list.List.*;
 
-public class ADTListJqwikTemplate {
+public class ADTListJqwikTest {
 
   final int maxLen = 10;
 

@@ -2,7 +2,7 @@ package set;
 
 import list.List;
 
-public class ListSetJqwikTemplate extends ADTSetJqwikTemplate {
+public class ListSetJqwikTest extends ADTSetJqwikTest {
 	
 	@Override
 	protected <A extends Comparable<A>> Set<A> empty() {

@@ -5,7 +5,7 @@ import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
 
-public abstract class ADTSortedSetJqwikTemplate extends ADTSetJqwikTemplate {
+public abstract class ADTSortedSetJqwikTest extends ADTSetJqwikTest {
 
 	@Override
 	protected abstract <A extends Comparable<A>> SortedSet<A> empty();

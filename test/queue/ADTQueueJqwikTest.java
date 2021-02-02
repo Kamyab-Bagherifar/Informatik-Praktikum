@@ -13,7 +13,7 @@ import static list.List.list;
 import static org.junit.jupiter.api.Assertions.*;
 import static tuple.Tuple.tuple;
 
-public abstract class ADTQueueJqwikTemplate {
+public abstract class ADTQueueJqwikTest {
 
 	final int maxSize = 10;
 	protected abstract <A> Queue<A> empty();

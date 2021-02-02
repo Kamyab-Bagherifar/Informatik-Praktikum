@@ -1,6 +1,6 @@
 package queue;
 
-public class OneListQJqwikTemplate extends ADTQueueJqwikTemplate {
+public class OneListQJqwikTest extends ADTQueueJqwikTest {
 
 	@Override
 	protected <A> Queue<A> empty(){

@@ -8,7 +8,7 @@ import static list.List.list;
 import static map.JqwikUtils.*;
 import static tuple.Tuple.tuple;
 
-public abstract class ADTMapJqwikTemplate {
+public abstract class ADTMapJqwikTest {
 	
 	protected abstract <K extends Comparable<K>,V> Map<K,V> empty();
 	

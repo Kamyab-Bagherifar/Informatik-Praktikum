@@ -13,7 +13,7 @@ import static list.JqwikUtils.equalLists;
 import static list.List.reverse;
 import static tuple.Tuple.tuple;
 
-public abstract class ADTSetJqwikTemplate {
+public abstract class ADTSetJqwikTest {
 
 	@Provide
 	<A> Arbitrary<A> as(){

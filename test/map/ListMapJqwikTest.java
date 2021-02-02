@@ -4,7 +4,7 @@ import list.List;
 import tuple.Tuple;
 
 
-public class ListMapJqwikTemplate extends ADTMapJqwikTemplate {
+public class ListMapJqwikTest extends ADTMapJqwikTest {
 
 	@Override
 	protected <K extends Comparable<K>,V> Map<K,V> empty() {
