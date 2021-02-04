@@ -3,7 +3,9 @@ java_library(
     srcs = glob(["**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+       # "//inf/collectionsTemplate/src:collectionsTemplate-src",
         "//inf/collections/src:collections-src",
+
         "@maven//:org_junit_jupiter_junit_jupiter_api",
        # "@maven//:junit_junit",
         "@maven//:net_jqwik_jqwik_api",
@@ -12,3 +14,4 @@ java_library(
        # "@maven//:org_assertj_assertj_core",
     ],
 )
+

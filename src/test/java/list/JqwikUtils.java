@@ -100,7 +100,7 @@ public class JqwikUtils {
     return Combinators.combine(fstList,sndList).as((f,s)->tuple(f,s));
   }
 
-  private static <A> List<A> reverse(List<A> list){
+  public static <A> List<A> reverse(List<A> list){
     return foldl(x -> y -> x.cons(y), list(), list);
   }
 

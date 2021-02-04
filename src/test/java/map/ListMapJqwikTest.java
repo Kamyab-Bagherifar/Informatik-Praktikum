@@ -17,7 +17,7 @@ public class ListMapJqwikTest extends ADTMapJqwikTest {
 	}
 	
 	@Override
-  protected Map<String,Integer> wordFreq(String s) {
+  protected Map<String,Integer> wordMap(String s) {
 		return ListMap.wordMap(s);
 	}
 	

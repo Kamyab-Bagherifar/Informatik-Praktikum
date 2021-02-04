@@ -14,13 +14,13 @@ public abstract class ADTMapJqwikTest {
 	
   protected abstract <K extends Comparable<K>,V> Map<K,V> fromList(List<Tuple<K,V>> l);
 
-  protected abstract Map<String,Integer> wordFreq(String s);
-	
+  protected abstract Map<String,Integer> wordMap(String s);
+/*
 	private Map<Integer,String> map(List<Integer> keys){ // just 4 Fun
 		Function<Integer, String> f = i -> i + "";
 		return keys.foldl(m -> i -> m.insert(i, f.apply(i)), empty());
 	}
-
+*/
 	@Provide
 	Arbitrary<String> keys(){
 		return Arbitraries.strings().withCharRange('a', 'c')
@@ -350,9 +350,9 @@ public abstract class ADTMapJqwikTest {
 	}
 	
 	@Example
-	boolean testWordFreq() {
+	boolean testWordMap() {
 		String s = "aber und aber und und oder";
 		Map<String,Integer> m = fromList(list(tuple("aber",2),tuple("und",3),tuple("oder",1)));
-		return(wordFreq(s).isEqualTo(m));
+		return(wordMap(s).isEqualTo(m));
 	}
 }

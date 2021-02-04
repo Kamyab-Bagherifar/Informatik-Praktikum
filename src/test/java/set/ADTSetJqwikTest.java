@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static list.JqwikUtils.equalLists;
-import static list.List.reverse;
+import static list.JqwikUtils.reverse;
 import static tuple.Tuple.tuple;
 
 public abstract class ADTSetJqwikTest {
