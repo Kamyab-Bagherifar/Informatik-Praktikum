@@ -84,7 +84,7 @@ public class ADTListJqwikTest {
   // isEmpty((empty) = true
   @Example
   boolean isEmpty_empty() {
-    return false;
+    return list().isEmpty();
   }
 
   // length(empty) = 0
