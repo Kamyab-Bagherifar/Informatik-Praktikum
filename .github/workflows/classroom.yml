@@ -1,8 +1,8 @@
 name: GitHub Classroom Workflow
 on: [push]
 jobs:
-  first:
-    list: ADTList
+  list:
+    name: ADTList
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
