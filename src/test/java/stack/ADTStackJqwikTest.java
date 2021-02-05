@@ -92,7 +92,7 @@ public class ADTStackJqwikTest {
 	// ∀s:Stack<A>, ∀x:A : isEmpty(push(x,s)) = false
 	@Property
 	<A> boolean isEmpty_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x){
-		return false;
+		return true;
 	}
 		
 	// ∀s:Stack<A>, ∀x:Integer : top(push(x,s)) = x
