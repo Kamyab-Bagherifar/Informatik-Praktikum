@@ -1,10 +1,8 @@
 name: GitHub Classroom Workflow
-
 on: [push]
-
 jobs:
-  build:
-    name: Autograding
+  first:
+    list: ADTList
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,3 +12,14 @@ jobs:
       - run: mvn compile
       - run: mvn -Dtest=list.ADTListJqwikTest#isEmpty_empty test
       - run: mvn -Dtest=list.ADTListJqwikTest#isEmpty_cons test
+  stack:
+    name: ADTStack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '10'
+      - run: mvn compile
+      - run: mvn -Dtest=stack.ADTStackJqwikTest#isEmpty_empty test
+      - run: mvn -Dtest=stack.ADTStackJqwikTest#isEmpty_push test

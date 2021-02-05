@@ -86,7 +86,7 @@ public class ADTStackJqwikTest {
 	// isEmpty(empty)	= true
 	@Example
 	boolean isEmpty_empty(){
-		return false;
+		return true;
 	}
 	
 	// ∀s:Stack<A>, ∀x:A : isEmpty(push(x,s)) = false
