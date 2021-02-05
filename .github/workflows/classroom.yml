@@ -8,4 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up JDK1.1ß
+        uses: actions/setup-java@v1
+         with:
+          java-version 1.10
       - uses: education/autograding@v1
