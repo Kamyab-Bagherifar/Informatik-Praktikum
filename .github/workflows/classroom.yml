@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Autograding
+    name: Autogradingf
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
