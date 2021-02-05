@@ -96,7 +96,7 @@ public class ADTListJqwikTest {
   //  ∀x:A, ∀l:List<A> : isEmpty(cons(x,l)) = false
   @Property
   <A> boolean isEmpty_cons(@ForAll("as") A x, @ForAll("lists") List<A> l){
-    return false;
+    return !l.cons(x).isEmpty();
   }
 
   // ∀x:A : elem(x,empty)	= false
