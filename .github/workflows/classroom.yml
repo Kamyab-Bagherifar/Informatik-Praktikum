@@ -12,3 +12,4 @@ jobs:
         with:
           java-version: '10'
       - run: mvn compile
+      - run: mvn test
