@@ -8,22 +8,11 @@
 
 Im Paket fpinjava finden Sie diverse Klassen aus dem Lehrbuch wie z.B. Result.
 
-## Anpassung an Maven
-
-Die Datei test/BUILD können Sie löschen,
+Die Datei src/test/java/BUILD können Sie löschen,
 es sei denn Sie nutzen Bazel als Build-System.
-
-Für Maven müssen Sie die Verzeichnisstruktur an die Maven-Konventionen anpassen.
-
-Dazu `src` in `src/main/java`
-und `test` in `src/test/java`
-verschieben!
 
 Die Hilfsklasse `list.JqwikUtils` benötigt die Klasse
 `SerializationUtils` der Apache Commons Lang 3.9 API!
-
-Sie müssen den Import für das Interface `Function` anpassen!
-Verzeichnisse mit Code für noch nicht aktuelle Aufgaben müssen Sie in Intellij über "Project Structure" erst mal "excluden".
 
 ## Mindestanforderungen für Abnahme des Codes:
 

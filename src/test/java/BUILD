@@ -3,8 +3,8 @@ java_library(
     srcs = glob(["**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-       # "//inf/collectionsTemplate/src:collectionsTemplate-src",
-        "//inf/collections/src:collections-src",
+        "//inf/collectionsTemplate/src/main/java:collectionsTemplate-src",
+       # "//inf/collections/src:collections-src",
 
         "@maven//:org_junit_jupiter_junit_jupiter_api",
        # "@maven//:junit_junit",
