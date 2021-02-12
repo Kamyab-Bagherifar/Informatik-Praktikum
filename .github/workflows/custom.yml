@@ -16,6 +16,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - run: mvn compile
+      - run: mvn compile
       - run: mvn -Dtest=list.ADTListJqwikTest#isEmpty_empty test
       - run: mvn -Dtest=list.ADTListJqwikTest#isEmpty_cons test
       - run: mvn -Dtest=list.ADTListJqwikTest#isEmpty_empty test
