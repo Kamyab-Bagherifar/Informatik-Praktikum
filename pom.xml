@@ -44,8 +44,8 @@
             <version>${commons-lang3.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -68,7 +68,5 @@
                 </configuration>
             </plugin>
        </plugins>
-
     </build>
-
 </project>
