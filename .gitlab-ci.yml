@@ -1,0 +1,65 @@
+image: maven:latest
+#inspired by https://gitlab.com/gitlab-examples/maven/simple-maven-example
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode"
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+Build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+
+ADTList:
+  stage: test
+  script:
+    - mvn -Dtest=list.ADTListJqwikTest test
+
+ADTStack:
+  stage: test
+  script:
+    - mvn -Dtest=stack.ADTStackJqwikTest test
+
+OneListQueue:
+  stage: test
+  script:
+    - mvn -Dtest=queue.OneListQJqwikTest test
+
+TwoListQueue:
+  stage: test
+  script:
+    - mvn -Dtest=queue.TwoListQJqwikTest test
+
+ListSet:
+  stage: test
+  script:
+    - mvn -Dtest=set.ListSetJqwikTest test
+
+TreeSet:
+  stage: test
+  script:
+    - mvn -Dtest=set.TreeSetJqwikTest test
+
+ListMap:
+  stage: test
+  script:
+    - mvn -Dtest=map.ListMapJqwikTest test
+
+TreeMap:
+  stage: test
+  script:
+    - mvn -Dtest=map.TreeMapJqwikTest test
+
+BST:
+  stage: test
+  script:
+    - mvn -Dtest=tree.bst.TreeJqwikTest test
+
+deploy-prod:
+  stage: deploy
+  script:
+    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
