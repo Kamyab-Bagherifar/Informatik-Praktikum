@@ -24,5 +24,5 @@ Die Hilfsklasse `list.JqwikUtils` benötigt die Klasse
 - Jede if-Anweisung hat einen else-Zweig.
   (Am Besten Sie verwenden immer den ternären Ausdruck: ...?...:... )
 - Sie müssen erklären können,
-  welche Nachteile Programme haben,
-  die o.g. Anforderungen nicht erfüllen!
+  welche Nachteile Ihre Programme haben,
+  wenn sie die o.g. Anforderungen nicht erfüllen!
