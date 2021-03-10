@@ -27,32 +27,32 @@ ADTStack:
 OneListQueue:
   stage: test
   script:
-    - mvn -Dtest=queue.OneListQJqwikTest test
+    - mvn -Dinclude.tests=queue.OneListQJqwikTest test
 
 TwoListQueue:
   stage: test
   script:
-    - mvn -Dtest=queue.TwoListQJqwikTest test
+    - mvn -Dinclude.tests=queue.TwoListQJqwikTest test
 
 ListSet:
   stage: test
   script:
-    - mvn -Dtest=set.ListSetJqwikTest test
+    - mvn -Dinclude.tests=set.ListSetJqwikTest test
 
 TreeSet:
   stage: test
   script:
-    - mvn -Dtest=set.TreeSetJqwikTest test
+    - mvn -Dinclude.tests=set.TreeSetJqwikTest test
 
 ListMap:
   stage: test
   script:
-    - mvn -Dtest=map.ListMapJqwikTest test
+    - mvn -Dinclude.tests=map.ListMapJqwikTest test
 
 TreeMap:
   stage: test
   script:
-    - mvn -Dtest=map.TreeMapJqwikTest test
+    - mvn -Dinclude.tests=map.TreeMapJqwikTest test
 
 BST:
   stage: test

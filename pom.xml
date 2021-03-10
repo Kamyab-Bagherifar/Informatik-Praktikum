@@ -11,7 +11,7 @@
     <properties>
         <junit-jupiter.version>5.7.1</junit-jupiter.version>
         <jqwik.version>1.5.0</jqwik.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <commons-lang3.version>3.9</commons-lang3.version>
 
         <java.version>1.10</java.version>
@@ -53,17 +53,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <properties>
-                        <configurationParameters>
-                            jqwik.tries.default = 100
-                            jqwik.reporting.usejunitplatform = false
-                        </configurationParameters>
-                    </properties>
                     <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                        <include>**/*Examples.java</include>
-                        <include>**/*Properties.java</include>
+                        <include>${include.tests}</include>
                     </includes>
                 </configuration>
             </plugin>

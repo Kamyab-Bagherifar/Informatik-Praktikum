@@ -71,10 +71,11 @@ public class ADTListJqwikTest {
   }
 
   @Property // nicht aendern!
-  <A> boolean listFromUnEqualJavaListsAreUnEqual(@ForAll java.util.List<A> a1, @ForAll java.util.List<A> a2){
+  <A> boolean listsFromUnEqualJavaListsAreUnEqual(@ForAll java.util.List<A> a1, @ForAll java.util.List<A> a2){
     Assume.that(!a1.equals(a2));
     return !list(a1).equals(list(a2));
   }
+
 
   @Property // nicht aendern!
   <A> boolean unEqualListsAreUnEqual(@ForAll("unEqualLists") Tuple<List<A>,List<A>> t){
