@@ -28,6 +28,7 @@ OneListQueue:
   stage: test
   script:
     - mvn -Dinclude.tests=queue.OneListQJqwikTest test
+# -Dinclude.tests because of https://github.com/junit-team/junit5/issues/1406
 
 TwoListQueue:
   stage: test
