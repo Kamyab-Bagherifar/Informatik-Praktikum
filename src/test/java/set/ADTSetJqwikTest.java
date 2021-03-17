@@ -79,8 +79,8 @@ public abstract class ADTSetJqwikTest {
 	}
 
 	@Property
-	public <A extends Comparable<A>>
-	boolean setsFromUnEqualJavaSetsAreUnEqual(@ForAll java.util.Set<A> js1, @ForAll java.util.Set<A>  js2){
+	public //<A extends Comparable<A>>
+	boolean setsFromUnEqualJavaSetsAreUnEqual(@ForAll java.util.Set<Integer> js1, @ForAll java.util.Set<Integer>  js2){
 		Assume.that(!js1.equals(js2));
 		return !fromCollection(js1).isEqualTo(fromCollection(js2));
 	}
