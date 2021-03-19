@@ -1,8 +1,9 @@
 image: maven:latest
 #inspired by https://gitlab.com/gitlab-examples/maven/simple-maven-example
 variables:
-  MAVEN_OPTS: "-f gitlab-pom.xml -Dmaven.repo.local=.m2/repository"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   MAVEN_CLI_OPTS: "--batch-mode"
+  POM: "-f gitlab-pom.xml"
 
 cache:
   paths:
@@ -12,53 +13,53 @@ cache:
 Build:
   stage: build
   script:
-    - mvn  $MAVEN_CLI_OPTS compile
+    - mvn $POM  $MAVEN_CLI_OPTS compile
 
 ADTList:
   stage: test
   script:
-    - mvn -Dtest=list.ADTListJqwikTest test
+    - mvn $POM -Dtest=list.ADTListJqwikTest test
 
 ADTStack:
   stage: test
   script:
-    - mvn -Dtest=stack.ADTStackJqwikTest test
+    - mvn $POM -Dtest=stack.ADTStackJqwikTest test
 
 OneListQueue:
   stage: test
   script:
-    - mvn -Dinclude.tests=queue.OneListQJqwikTest test
+    - mvn $POM -Dinclude.tests=queue.OneListQJqwikTest test
 # -Dinclude.tests because of https://github.com/junit-team/junit5/issues/1406
 
 TwoListQueue:
   stage: test
   script:
-    - mvn -Dinclude.tests=queue.TwoListQJqwikTest test
+    - mvn $POM -Dinclude.tests=queue.TwoListQJqwikTest test
 
 ListSet:
   stage: test
   script:
-    - mvn -Dinclude.tests=set.ListSetJqwikTest test
+    - mvn $POM -Dinclude.tests=set.ListSetJqwikTest test
 
 TreeSet:
   stage: test
   script:
-    - mvn -Dinclude.tests=set.TreeSetJqwikTest test
+    - mvn $POM -Dinclude.tests=set.TreeSetJqwikTest test
 
 ListMap:
   stage: test
   script:
-    - mvn -Dinclude.tests=map.ListMapJqwikTest test
+    - mvn $POM -Dinclude.tests=map.ListMapJqwikTest test
 
 TreeMap:
   stage: test
   script:
-    - mvn -Dinclude.tests=map.TreeMapJqwikTest test
+    - mvn $POM -Dinclude.tests=map.TreeMapJqwikTest test
 
 BST:
   stage: test
   script:
-    - mvn -Dtest=tree.bst.TreeJqwikTest test
+    - mvn $POM -Dtest=tree.bst.TreeJqwikTest test
 
 deploy-prod:
   stage: deploy
