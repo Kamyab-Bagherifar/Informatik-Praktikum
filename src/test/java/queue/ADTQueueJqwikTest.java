@@ -138,7 +138,7 @@ public abstract class ADTQueueJqwikTest {
 		return false;
 	}
 
-	// ∀q : Queue<A>, ∀xs : List<A>  enqueueAll(x:xs,q) = enqueueAll(xs, enqueue(x,q)), falls q nicht leer
+	// ∀q : Queue<A>, ∀xs : List<A>  enqueueAll(x:xs,q) = enqueueAll(xs, enqueue(x,q)), falls xs nicht leer
 	@Property
 	public <A> boolean enqueueAll(@ForAll("queues") Queue<A> q, @ForAll("lists") List<A> xs) {
 		return false;
