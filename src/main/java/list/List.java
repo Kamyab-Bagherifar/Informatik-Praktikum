@@ -61,6 +61,8 @@ public abstract class List<A> {
     public abstract <B> B foldl(Function<B, Function<A, B>> f, B s);
 
 
+
+
     // A.) Grundoperationen, cons = Construct
     public List<A> cons(A a) {
         return new Cons<>(a, this);
@@ -196,6 +198,8 @@ public abstract class List<A> {
         }
 
 
+
+
     }
 
     // B.) Rekursive Funktionen
@@ -303,9 +307,10 @@ public abstract class List<A> {
         }
 
         @Override
-        public List<A> reverse() {
-            return new Cons<>(head(), (tail.reverse()));
+         public List<A> reverse() {
+            return append(tail.reverse(), list(head));
         }
+
 
         @Override
         public <B> B foldr(Function<A, Function<B, B>> f, B s) {
@@ -316,6 +321,8 @@ public abstract class List<A> {
         public <B> B foldl(Function<B, Function<A, B>> f, B s) {
             return this.isEmpty() ? s : this.tail().foldl(f, f.apply(s).apply(this.head()));
         }
+
+
 
 
         public String toString() {
@@ -386,10 +393,7 @@ public abstract class List<A> {
 
     }
 
-    /*public static <A> List<A> reverse(List<A> xs) {
-        return xs.isEmpty() ? list() : append(reverse(xs.tail()), list(xs.head()));
-    }
-*/
+
     public static <A> List<A> concat(List<A> xs, List<A> xss) {
         return xs.isEmpty() ? xss : new Cons<>(xs.head(), concat(xs.tail(), xss));
     }
@@ -484,16 +488,47 @@ public abstract class List<A> {
         return foldr(x -> s -> x + ", " + s, "",list);
     }
 
-   /*public static <A> List<A> concat(List<List<A>> list){
-        return foldr()
-    }*/
 
-
+    public static <A> List<A> concatfoldr(List<List<A>> list) {
+        return foldr(x -> y -> append(x,y), list(), list);
+    }
 
 
     public static <A> List<A> reversefoldl(List<A> list) {
         return foldl(xs -> x -> xs.cons(x), list(), list);
     }
+
+    public static <A> List<A> takeWhilefoldr(Function<A, Boolean> p, List<A> list){
+         return foldr( x -> y -> p.apply(x) ? new Cons<>(x, y) : list(), list(), list);
+
+    }
+    public A lastfoldl() {
+        return foldl((x -> y -> list(x).isEmpty() ? this.head() : y), null, this);
+    }
+
+   public static <A> boolean any(Function<A, Boolean> p, List<A> list) {
+
+       return p.apply(list.head()) || list.tail().any(p);
+   }
+
+
+    // !any !p list
+   public static <A> Boolean allAnyFoldl(List<A> list, Function<A, Boolean> p) {
+        return foldl(y -> x -> any(b -> p.apply(x) && y, list), true, list);
+    }
+
+    // any x -> x == gesuchtes element list
+    public static <A> Boolean elemAnyFoldl(List<A> list, A z) {
+        return foldl(y -> x -> any(b -> b == z || y, list), false, list);
+    }
+
+
+
+
+
+
+
+
 
 
 
