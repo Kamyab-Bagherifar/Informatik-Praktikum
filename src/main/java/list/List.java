@@ -63,6 +63,8 @@ public abstract class List<A> {
 
 
 
+
+
     // A.) Grundoperationen, cons = Construct
     public List<A> cons(A a) {
         return new Cons<>(a, this);
@@ -85,7 +87,7 @@ public abstract class List<A> {
         // toString methode
         public String toString() {
             return "[NIL]";
-        }
+    }
 
         private Nil() {
         }
@@ -197,6 +199,9 @@ public abstract class List<A> {
             return s;
         }
 
+        @Override
+        public boolean equals(Object o) { return o instanceof Nil; }
+
 
 
 
@@ -234,6 +239,7 @@ public abstract class List<A> {
         public boolean isEqualTo(List<A> xs) {
             return xs.head() == this.head && this.tail.isEqualTo(xs.tail());
         }
+
 
         @Override
         public int length() {
@@ -322,6 +328,15 @@ public abstract class List<A> {
             return this.isEmpty() ? s : this.tail().foldl(f, f.apply(s).apply(this.head()));
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof Cons)) return false;
+            List<A> list = (Cons<A>) o;
+            return (head().equals(list.head()) && tail.equals(list.tail()));
+        }
+
+
+
 
 
 
@@ -349,16 +364,39 @@ public abstract class List<A> {
         return n;
     }
 
+    //sum
+    public static Integer sum(List<Integer> list){
+        return (list.isEmpty()) ? 0 : list.head() + sum(list.tail());
+    }
 
+    //prod
     public static Double prod(List<Double> list) {
         return list.isEmpty() ? 1.0 : list.head() * prod(list.tail());
 
     }
-
+    //append
     public static <A> List<A> append(List<A> xs, List<A> ys) {
         return xs.isEmpty() ? ys : new Cons<>(xs.head(), append(xs.tail(), ys));
     }
 
+    //concat
+    public static <A> List<A> concat(List<A> xs, List<A> xss) {
+        return xs.isEmpty() ? xss : new Cons<>(xs.head(), concat(xs.tail(), xss));
+    }
+
+    //and
+    public static boolean and(List<Boolean> list) {
+        return list.isEmpty() ? true : list.head() && and(list.tail());
+
+    }
+
+    //or
+    public static boolean or(List<Boolean> list) {
+        return list.isEmpty() ? false : list.head() || or(list.tail());
+
+    }
+
+    //minimum
     public static Integer minimum(List<Integer> list) {
        /* return list.isEmpty() ? throw new IllegalStateException("minimum of empty list") : list.length()==1 ?
                 list.head() : list.head() + minimum(list.tail());*/
@@ -372,6 +410,8 @@ public abstract class List<A> {
 
     }
 
+
+    //maximum
     public static Integer maximum(List<Integer> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("maximum of empty list");
@@ -383,115 +423,145 @@ public abstract class List<A> {
 
     }
 
-    public static boolean and(List<Boolean> list) {
-        return list.isEmpty() ? true : list.head() && and(list.tail());
-
-    }
-
-    public static boolean or(List<Boolean> list) {
-        return list.isEmpty() ? false : list.head() || or(list.tail());
-
-    }
 
 
-    public static <A> List<A> concat(List<A> xs, List<A> xss) {
-        return xs.isEmpty() ? xss : new Cons<>(xs.head(), concat(xs.tail(), xss));
-    }
-
-
+    //right fold
     public static <A, B> B foldr(Function<A, Function<B, B>> f, B s, List<A> list) {
         return list.isEmpty() ? s : f.apply(list.head()).apply(foldr(f, s, list.tail()));
     }
 
+
+    //left fold
     public static <A, B> B foldl(Function<B, Function<A, B>> f, B s, List<A> xs) {
         return xs.isEmpty() ? s : foldl(f, f.apply(s).apply(xs.head()), xs.tail());
     }
 
+
+    // sum with foldr
     public static Integer sumfoldr(List<Integer> list) {
         return foldr(x -> y -> x + y, 0, list);
     }
 
+    //sum with foldl
     public static Integer sumfoldl(List<Integer> list) {
         return foldl(x -> y -> x + y, 0, list);
     }
 
+    // prod with foldr
     public static Double prodfoldr(List<Double> list) {
         return foldr(x -> y -> x * y, 1.0, list);
     }
 
+
+    // prod with foldl
     public static Double prodfoldl(List<Double> list) {
         return foldl(x -> y -> x * y, 1.0, list);
     }
 
+
+    //length with foldr
     public static Integer lengthfoldr(List<Integer> list) {
         return foldr(x -> n -> 1 + n, 0, list);
     }
 
+
+    //length with foldl
     public static Integer lengthfoldl(List<Integer> list) {
         return foldl(x -> n -> 1 + n, 0, list);
     }
 
+
+    //elem with foldr
     public static <A> Boolean elemfoldr(List<A> list, A z) {
         return foldr(x -> y -> x.equals(z) || y, false, list);
     }
 
+
+    //elem with foldl
     public static <A> Boolean elemfoldl(List<A> list, A z) {
         return foldl(y -> x -> x.equals(z) || y, false, list);
     }
 
 
+
+    //any with foldr
     public static <A> Boolean anyfoldr(List<A> list, Function<A, Boolean> p) {
         return foldr(x -> y -> p.apply(x) || y, false, list);
     }
 
+
+    //any with foldl
     public static <A> Boolean anyfoldl(List<A> list, Function<A, Boolean> p) {
         return foldl(y -> x -> p.apply(x) || y, false, list);
     }
 
+
+    //all with foldr
     public static <A> Boolean allfoldr(List<A> list, Function<A, Boolean> p) {
         return foldr(x -> y -> p.apply(x) && y, true, list);
     }
 
+
+    //all with foldl
     public static <A> Boolean allfoldl(List<A> list, Function<A, Boolean> p) {
         return foldl(y -> x -> p.apply(x) && y, true, list);
     }
 
+
+    //and with foldr
     public static Boolean andfoldr(List<Boolean> list) {
         return foldr(x -> y -> x && y, true, list);
     }
 
+
+    //and with foldl
     public static Boolean andfoldl(List<Boolean> list) {
         return foldl(y -> x -> x && y, true, list);
     }
 
+
+    //or with foldr
     public static Boolean orfoldr(List<Boolean> list) {
         return foldr(x -> y -> x || y, false, list);
     }
 
+
+    // or with foldl
     public static Boolean orfoldl(List<Boolean> list) {
         return foldl(x -> y -> x || y, false, list);
     }
 
+
+    // append with foldr
     public static <A> List<A> appendfoldr(List<A> list1, List<A> list2){
         return foldr(x -> l -> new Cons<>(x, l), list1, list2);
     }
 
+
+    //concat with foldr
+    public static <A> List<A> concatfoldr(List<List<A>> list) {
+        return foldr(x -> y -> append(x,y), list(), list);
+    }
+
+
+    //map with foldr
     public static <A,B> List<B> mapfoldr(Function<A, B> f, List<A> list){
         return foldr(x-> xs -> xs.cons(f.apply(x)), list(), list);
     }
 
+
+    //filter with foldr
     public static <A> List<A> filterfoldr(Function<A, Boolean> p, List<A> list){
         return foldr(x-> xs -> p.apply(x) ? xs.cons(x) : xs, list(), list);
     }
+
 
     public static <A> String toStringfoldr(List<A> list) {
         return foldr(x -> s -> x + ", " + s, "",list);
     }
 
 
-    public static <A> List<A> concatfoldr(List<List<A>> list) {
-        return foldr(x -> y -> append(x,y), list(), list);
-    }
+
 
 
     public static <A> List<A> reversefoldl(List<A> list) {
@@ -502,9 +572,10 @@ public abstract class List<A> {
          return foldr( x -> y -> p.apply(x) ? new Cons<>(x, y) : list(), list(), list);
 
     }
-    public A lastfoldl() {
+    public  A lastfoldl() {
         return foldl((x -> y -> list(x).isEmpty() ? this.head() : y), null, this);
     }
+
 
    public static <A> boolean any(Function<A, Boolean> p, List<A> list) {
 
@@ -521,6 +592,64 @@ public abstract class List<A> {
     public static <A> Boolean elemAnyFoldl(List<A> list, A z) {
         return foldl(y -> x -> any(b -> b == z || y, list), false, list);
     }
+
+    //Aufgabe E
+    public <B> List<B> concatMapExercise(Function<A, List<B>> f) {
+        return foldr(a -> b -> append(f.apply(a), b),list());
+    }
+
+    // Aufgabe F teil 1
+    public static List<Integer> range(int start, int end) {
+        return start > end ? list() : append(range(start,end - 1),list(end));
+    }
+    //Aufgabe F teil 2
+    public static List<String> words(String s) {
+        return s.trim().isEmpty() ? list() :
+                append(list(s.trim().split("\\s+")[0]), words(s.trim().substring(s.trim().split("\\s+")[0].length())));
+    }
+
+    //Aufgabe G Euler1Problem
+    public static Integer euler1Problem() {
+        return sum(range(0,2000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 2000));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
