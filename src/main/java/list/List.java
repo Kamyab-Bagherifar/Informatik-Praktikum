@@ -1,10 +1,12 @@
 package list;
 
 
+import fpinjava.Function;
 import fpinjava.TailCall;
 
 import java.lang.reflect.Type;
-import java.util.function.Function;
+
+
 
 import static fpinjava.TailCall.ret;
 import static fpinjava.TailCall.sus;
@@ -258,7 +260,7 @@ public abstract class List<A> {
 
         @Override
         public boolean all(Function<A, Boolean> p) {
-            return p.apply(head) && tail().any(p);
+            return p.apply(head) && tail().all(p);
         }
 
         @Override
@@ -405,7 +407,7 @@ public abstract class List<A> {
         } else if (list.length() == 1) {
             return list.head();
         } else {
-            return list.head() + minimum(list.tail());
+            return list.head();
         }
 
     }
@@ -418,7 +420,7 @@ public abstract class List<A> {
         } else if (list.length() == 1) {
             return list.head();
         } else {
-            return list.head() + maximum(list.tail());
+            return  maximum(list.tail());
         }
 
     }
@@ -577,10 +579,13 @@ public abstract class List<A> {
     }
 
 
+
+    //Aufgabe D.3
    public static <A> boolean any(Function<A, Boolean> p, List<A> list) {
 
        return p.apply(list.head()) || list.tail().any(p);
    }
+
 
 
     // !any !p list
@@ -592,6 +597,8 @@ public abstract class List<A> {
     public static <A> Boolean elemAnyFoldl(List<A> list, A z) {
         return foldl(y -> x -> any(b -> b == z || y, list), false, list);
     }
+
+
 
     //Aufgabe E
     public <B> List<B> concatMapExercise(Function<A, List<B>> f) {
@@ -612,6 +619,10 @@ public abstract class List<A> {
     public static Integer euler1Problem() {
         return sum(range(0,2000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 2000));
     }
+
+
+
+
 
 
 

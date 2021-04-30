@@ -11,6 +11,7 @@ import java.util.Arrays;
 import static list.JqwikUtils.unEqualIntLists;
 import static list.List.*;
 
+
 public class ADTListJqwikTest {
 
     final int maxLen = 10;
@@ -141,108 +142,123 @@ public class ADTListJqwikTest {
     // ∀l:List<A> : length(tail(l)) = length(l) - 1, falls l nicht leer
     @Property
     <A> boolean length_tail(@ForAll("lists") List<A> l) {
-        if(!l.isEmpty()){
-
-
-        }
+        Assume.that(!l.isEmpty());
+        return l.tail().length() == l.length() - 1;
     }
 
     // or ([]) 		= false
     @Example
     boolean or_empty() {
-        return false;
+        return !or(list());
+
     }
 
     // and ([]) 		= true
     @Example
     boolean and_empty() {
-        return false;
+        return and(list());
+
     }
 
     // ∀f: A → Boolean
     // any(f,[])	= False
     @Property
     <A> boolean any_empty(@ForAll Function<A, Boolean> f) {
-        return false;
+        return !NIL.any((f));
     }
 
     // ∀f: A → Boolean
     // all(f,[])	= True
     @Property
     <A> boolean all_empty(@ForAll Function<A, Boolean> f) {
-        return false;
+        return NIL.all(f);
     }
+
 
     // ∀l: List<A> :  any(x -> x==minimum(l),l)   = true, falls l nicht leer
     @Property
     boolean minimum_any(@ForAll("intLists") List<Integer> l) {
-        return false;
+        Assume.that(!l.isEmpty());
+        return l.any(x -> x.equals(minimum(l)));
     }
 
     //  ∀l: List<A> : all(x -> x>=minimum(l),l)   = true, falls l nicht leer
     @Property
     boolean minimum_all(@ForAll("intLists") List<Integer> l) {
-        return false;
+        Assume.that(!l.isEmpty());
+        return l.all(x -> x >= minimum(l));
+
     }
 
     // Formulieren Sie ein Axiom analog zu minimum_any!
     @Property
     boolean maximum_any(@ForAll("intLists") List<Integer> l) {
-        return false;
+        Assume.that(!l.isEmpty());
+        return l.any(x -> x.equals(maximum(l)));
     }
 
     //  Formulieren Sie ein Axiom analog zu minimum_all!
     @Property
     boolean maximum_all(@ForAll("intLists") List<Integer> l) {
+
         return false;
     }
 
     // ∀ l: List, ∀ start,end: Integer :	minimum([start..end])  = start, falls end >= start
     @Property
     // Definieren Sie einen geeigneten IntRange für die Parameter!
-    boolean minimum_range(@ForAll @IntRange(/*???*/) int start, @ForAll @IntRange(/*???*/) int end) {
-        return false;
+    boolean minimum_range(@ForAll @IntRange(min = 1, max = 1000) int start, @ForAll @IntRange(min = 1, max = 1000) int end) {
+        Assume.that(end >= start);
+        return minimum(range(start,end)) == start;
+
+
     }
 
     //  Formulieren Sie ein Axiom analog zu minimum_range!
     @Property
     boolean maximum_range(@ForAll int start, @ForAll int end) {
-        return false;
+        Assume.that(end >= start);
+        return maximum(range(start,end)) == start;
+
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
     // any(f,xs)	= or (map(f, xs))
     @Property
     <A> boolean any_or(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;
+        return l.any(f) == or(l.map(f));
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
     // all(f,xs)   = and(map(f, xs))
     @Property
     <A> boolean all_and(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;
+
+        return l.all(f) == and(l.map(f));
     }
 
     // ∀l: List<Boolean>
     // not(or(l)) = and(map(not,l)) -- Gesetz von De Morgan
     @Property
     boolean or_and(@ForAll("boolLists") List<Boolean> l) {
-        return false;
+
+        return !or(l) == and(l.map( a -> !a));
     }
 
     // ∀l: List<Boolean>
     // not(and(l))= or(map(not,l))   -- Gesetz von De Morgan
     @Property
     boolean and_or(@ForAll("boolLists") List<Boolean> l) {
-        return false;
+
+        return !and(l) == or(l.map( a -> !a));
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
     // not(any(f,l))	= all (not.f, l) -- Gesetz von De Morgan
     @Property
     <A> boolean any_all(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;
+
+        return !l.any(f) == l.all();
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
@@ -256,7 +272,8 @@ public class ADTListJqwikTest {
     // take(n,l) ++ drop(n,l) = l
     @Property
     <A> boolean take_drop(@ForAll("lists") List<A> l, @ForAll int n) {
-        return false;
+        return l.take(n).drop(n) == list();
+
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
@@ -264,7 +281,7 @@ public class ADTListJqwikTest {
     @Property
     @Report(Reporting.GENERATED)
     <A> boolean takeWhile_dropWhile(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;
+       return l.takeWhile(f).dropWhile(f) == list();
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
@@ -272,6 +289,8 @@ public class ADTListJqwikTest {
     @Property
     @Report(Reporting.GENERATED)
     <A> boolean finde(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;  // null-Pointer-sicher vergleichen!
+          return true;
+
+        // null-Pointer-sicher vergleichen!
     }
 }
