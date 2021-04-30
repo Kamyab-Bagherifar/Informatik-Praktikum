@@ -400,14 +400,12 @@ public abstract class List<A> {
 
     //minimum
     public static Integer minimum(List<Integer> list) {
-       /* return list.isEmpty() ? throw new IllegalStateException("minimum of empty list") : list.length()==1 ?
-                list.head() : list.head() + minimum(list.tail());*/
         if (list.isEmpty()) {
             throw new IllegalStateException("minimum of empty list");
         } else if (list.length() == 1) {
             return list.head();
         } else {
-            return list.head();
+            return Math.min(list.head(), minimum(list.tail()));
         }
 
     }
@@ -420,7 +418,7 @@ public abstract class List<A> {
         } else if (list.length() == 1) {
             return list.head();
         } else {
-            return  maximum(list.tail());
+            return  Math.max(list.head(), maximum(list.tail()));
         }
 
     }

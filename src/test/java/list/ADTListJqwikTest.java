@@ -7,6 +7,7 @@ import tuple.Tuple;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static list.JqwikUtils.unEqualIntLists;
 import static list.List.*;
@@ -123,7 +124,7 @@ public class ADTListJqwikTest {
     // ∀x:A, ∀l:List<A> : head(cons(x,l)) = x
     @Property
     <A> boolean head_cons(@ForAll("as") A x, @ForAll("lists") List<A> l) {
-        return append(list(x),l).head() == x;
+        return append(list(x), l).head() == x;
 
     }
 
@@ -136,7 +137,7 @@ public class ADTListJqwikTest {
     // ∀x:A, ∀l:List<A> : length(cons(x,l)) = length(l)+1
     @Property
     <A> boolean length_cons(@ForAll("as") A x, @ForAll("lists") List<A> l) {
-        return append(list(x), l).length() == l.length()+1;
+        return append(list(x), l).length() == l.length() + 1;
     }
 
     // ∀l:List<A> : length(tail(l)) = length(l) - 1, falls l nicht leer
@@ -201,24 +202,25 @@ public class ADTListJqwikTest {
     @Property
     boolean maximum_all(@ForAll("intLists") List<Integer> l) {
 
-        return false;
+        Assume.that(!l.isEmpty());
+        return l.all(x -> x <= maximum(l));
     }
 
     // ∀ l: List, ∀ start,end: Integer :	minimum([start..end])  = start, falls end >= start
     @Property
     // Definieren Sie einen geeigneten IntRange für die Parameter!
     boolean minimum_range(@ForAll @IntRange(min = 1, max = 1000) int start, @ForAll @IntRange(min = 1, max = 1000) int end) {
-        Assume.that(end >= start);
-        return minimum(range(start,end)) == start;
+        //Assume.that(end >= start);
+        return end >= start ? minimum(range(start, end)) == start : minimum(range(end, start)) == end;
 
 
     }
 
     //  Formulieren Sie ein Axiom analog zu minimum_range!
     @Property
-    boolean maximum_range(@ForAll int start, @ForAll int end) {
-        Assume.that(end >= start);
-        return maximum(range(start,end)) == start;
+    boolean maximum_range(@ForAll @IntRange(min = 1, max = 1000) int start, @ForAll @IntRange(min = 1, max = 1000) int end) {
+        //Assume.that(end >= start);
+        return end >= start ? maximum(range(start, end)) == end : maximum(range(end, start)) == start;
 
     }
 
@@ -242,7 +244,7 @@ public class ADTListJqwikTest {
     @Property
     boolean or_and(@ForAll("boolLists") List<Boolean> l) {
 
-        return !or(l) == and(l.map( a -> !a));
+        return !or(l) == and(l.map(a -> !a));
     }
 
     // ∀l: List<Boolean>
@@ -250,7 +252,7 @@ public class ADTListJqwikTest {
     @Property
     boolean and_or(@ForAll("boolLists") List<Boolean> l) {
 
-        return !and(l) == or(l.map( a -> !a));
+        return !and(l) == or(l.map(a -> !a));
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
@@ -258,14 +260,14 @@ public class ADTListJqwikTest {
     @Property
     <A> boolean any_all(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
 
-        return !l.any(f) == l.all();
+        return !l.any(f) == l.all(a -> !f.apply(a));
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
     // not(all(f,l)) = any(not.f, l) -- Gesetz von De Morgan
     @Property
     <A> boolean all_any(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return false;
+        return !l.all(f) == l.any(a -> !f.apply(a));
     }
 
     // ∀l: List<A>, ∀n: Integer
@@ -281,7 +283,7 @@ public class ADTListJqwikTest {
     @Property
     @Report(Reporting.GENERATED)
     <A> boolean takeWhile_dropWhile(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-       return l.takeWhile(f).dropWhile(f) == list();
+        return l.takeWhile(f).dropWhile(f) == list();
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
@@ -289,8 +291,8 @@ public class ADTListJqwikTest {
     @Property
     @Report(Reporting.GENERATED)
     <A> boolean finde(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-          return true;
-
+        //return l.finde(f) == (l.any(f) ? l.filter(f).head() : null);
+        return Objects.equals(l.finde(f), (l.any(f) ? l.filter(f).head() : null));
         // null-Pointer-sicher vergleichen!
     }
 }
