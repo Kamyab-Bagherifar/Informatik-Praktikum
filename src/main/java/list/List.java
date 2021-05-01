@@ -7,7 +7,6 @@ import fpinjava.TailCall;
 import java.lang.reflect.Type;
 
 
-
 import static fpinjava.TailCall.ret;
 import static fpinjava.TailCall.sus;
 
@@ -63,10 +62,6 @@ public abstract class List<A> {
     public abstract <B> B foldl(Function<B, Function<A, B>> f, B s);
 
 
-
-
-
-
     // A.) Grundoperationen, cons = Construct
     public List<A> cons(A a) {
         return new Cons<>(a, this);
@@ -89,7 +84,7 @@ public abstract class List<A> {
         // toString methode
         public String toString() {
             return "[NIL]";
-    }
+        }
 
         private Nil() {
         }
@@ -202,9 +197,9 @@ public abstract class List<A> {
         }
 
         @Override
-        public boolean equals(Object o) { return o instanceof Nil; }
-
-
+        public boolean equals(Object o) {
+            return o instanceof Nil;
+        }
 
 
     }
@@ -315,7 +310,7 @@ public abstract class List<A> {
         }
 
         @Override
-         public List<A> reverse() {
+        public List<A> reverse() {
             return append(tail.reverse(), list(head));
         }
 
@@ -330,16 +325,14 @@ public abstract class List<A> {
             return this.isEmpty() ? s : this.tail().foldl(f, f.apply(s).apply(this.head()));
         }
 
+
+        // Aufgabe H Equals-Methode
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof Cons)) return false;
             List<A> list = (Cons<A>) o;
             return (head().equals(list.head()) && tail.equals(list.tail()));
         }
-
-
-
-
 
 
         public String toString() {
@@ -367,7 +360,7 @@ public abstract class List<A> {
     }
 
     //sum
-    public static Integer sum(List<Integer> list){
+    public static Integer sum(List<Integer> list) {
         return (list.isEmpty()) ? 0 : list.head() + sum(list.tail());
     }
 
@@ -376,6 +369,7 @@ public abstract class List<A> {
         return list.isEmpty() ? 1.0 : list.head() * prod(list.tail());
 
     }
+
     //append
     public static <A> List<A> append(List<A> xs, List<A> ys) {
         return xs.isEmpty() ? ys : new Cons<>(xs.head(), append(xs.tail(), ys));
@@ -418,11 +412,10 @@ public abstract class List<A> {
         } else if (list.length() == 1) {
             return list.head();
         } else {
-            return  Math.max(list.head(), maximum(list.tail()));
+            return Math.max(list.head(), maximum(list.tail()));
         }
 
     }
-
 
 
     //right fold
@@ -483,7 +476,6 @@ public abstract class List<A> {
     }
 
 
-
     //any with foldr
     public static <A> Boolean anyfoldr(List<A> list, Function<A, Boolean> p) {
         return foldr(x -> y -> p.apply(x) || y, false, list);
@@ -533,61 +525,63 @@ public abstract class List<A> {
 
 
     // append with foldr
-    public static <A> List<A> appendfoldr(List<A> list1, List<A> list2){
+    public static <A> List<A> appendfoldr(List<A> list1, List<A> list2) {
         return foldr(x -> l -> new Cons<>(x, l), list1, list2);
     }
 
 
     //concat with foldr
     public static <A> List<A> concatfoldr(List<List<A>> list) {
-        return foldr(x -> y -> append(x,y), list(), list);
+        return foldr(x -> y -> append(x, y), list(), list);
     }
 
 
     //map with foldr
-    public static <A,B> List<B> mapfoldr(Function<A, B> f, List<A> list){
-        return foldr(x-> xs -> xs.cons(f.apply(x)), list(), list);
+    public static <A, B> List<B> mapfoldr(Function<A, B> f, List<A> list) {
+        return foldr(x -> xs -> xs.cons(f.apply(x)), list(), list);
     }
 
 
     //filter with foldr
-    public static <A> List<A> filterfoldr(Function<A, Boolean> p, List<A> list){
-        return foldr(x-> xs -> p.apply(x) ? xs.cons(x) : xs, list(), list);
+    public static <A> List<A> filterfoldr(Function<A, Boolean> p, List<A> list) {
+        return foldr(x -> xs -> p.apply(x) ? xs.cons(x) : xs, list(), list);
     }
 
 
+    //takeWhile with foldr
+    public static <A> List<A> takeWhilefoldr(Function<A, Boolean> p, List<A> list) {
+        return foldr(x -> y -> p.apply(x) ? new Cons<>(x, y) : list(), list(), list);
+
+    }
+
+    //toString with foldr
     public static <A> String toStringfoldr(List<A> list) {
-        return foldr(x -> s -> x + ", " + s, "",list);
+        return foldr(x -> s -> x + ", " + s, "", list);
     }
 
 
-
-
-
-    public static <A> List<A> reversefoldl(List<A> list) {
-        return foldl(xs -> x -> xs.cons(x), list(), list);
-    }
-
-    public static <A> List<A> takeWhilefoldr(Function<A, Boolean> p, List<A> list){
-         return foldr( x -> y -> p.apply(x) ? new Cons<>(x, y) : list(), list(), list);
-
-    }
-    public  A lastfoldl() {
+    // last with foldr
+    public A lastfoldl() {
         return foldl((x -> y -> list(x).isEmpty() ? this.head() : y), null, this);
     }
 
 
 
+    // reverse with foldr
+    public static <A> List<A> reversefoldl(List<A> list) {
+        return foldl(xs -> x -> xs.cons(x), list(), list);
+    }
+
+
     //Aufgabe D.3
-   public static <A> boolean any(Function<A, Boolean> p, List<A> list) {
+    public static <A> boolean any(Function<A, Boolean> p, List<A> list) {
 
-       return p.apply(list.head()) || list.tail().any(p);
-   }
-
+        return p.apply(list.head()) || list.tail().any(p);
+    }
 
 
     // !any !p list
-   public static <A> Boolean allAnyFoldl(List<A> list, Function<A, Boolean> p) {
+    public static <A> Boolean allAnyFoldl(List<A> list, Function<A, Boolean> p) {
         return foldl(y -> x -> any(b -> p.apply(x) && y, list), true, list);
     }
 
@@ -597,16 +591,16 @@ public abstract class List<A> {
     }
 
 
-
     //Aufgabe E
     public <B> List<B> concatMapExercise(Function<A, List<B>> f) {
-        return foldr(a -> b -> append(f.apply(a), b),list());
+        return foldr(a -> b -> append(f.apply(a), b), list());
     }
 
     // Aufgabe F teil 1
     public static List<Integer> range(int start, int end) {
-        return start > end ? list() : append(range(start,end - 1),list(end));
+        return start > end ? list() : append(range(start, end - 1), list(end));
     }
+
     //Aufgabe F teil 2
     public static List<String> words(String s) {
         return s.trim().isEmpty() ? list() :
@@ -615,62 +609,8 @@ public abstract class List<A> {
 
     //Aufgabe G Euler1Problem
     public static Integer euler1Problem() {
-        return sum(range(0,2000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 2000));
+        return sum(range(0, 2000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 2000));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
