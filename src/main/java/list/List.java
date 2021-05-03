@@ -233,8 +233,9 @@ public abstract class List<A> {
         }
 
         @Override
-        public boolean isEqualTo(List<A> xs) {
-            return xs.head() == this.head && this.tail.isEqualTo(xs.tail());
+        public boolean isEqualTo(List<A> xs){
+
+            return !xs.isEmpty() && head.equals(xs.head()) && tail.isEqualTo(xs.tail());
         }
 
 
@@ -555,8 +556,8 @@ public abstract class List<A> {
     }
 
     //toString with foldr
-    public static <A> String toStringfoldr(List<A> list) {
-        return foldr(x -> s -> x + ", " + s, "", list);
+    StringBuilder toStringfoldr(List<A> list) {
+        return foldr(x -> sb -> sb.insert(0, ", ").insert(0, x), new StringBuilder(), list);
     }
 
 
@@ -603,8 +604,7 @@ public abstract class List<A> {
 
     //Aufgabe F teil 2
     public static List<String> words(String s) {
-        return s.trim().isEmpty() ? list() :
-                append(list(s.trim().split("\\s+")[0]), words(s.trim().substring(s.trim().split("\\s+")[0].length())));
+        return !s.isEmpty() ? list(s.trim().split("\\s+")) : list();
     }
 
     //Aufgabe G Euler1Problem
