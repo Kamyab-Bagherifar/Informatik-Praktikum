@@ -332,8 +332,10 @@ public abstract class List<A> {
         public boolean equals(Object o) {
             if (!(o instanceof Cons)) return false;
             List<A> list = (Cons<A>) o;
-            return (head().equals(list.head()) && tail.equals(list.tail()));
+            return (head().equals(list.head()) && tail.isEqualTo(list.tail()));
+            //return (list(head()).isEqualTo(list(list.head())) && tail.isEqualTo(list.tail()));
         }
+
 
 
         public String toString() {

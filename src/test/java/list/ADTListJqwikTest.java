@@ -274,7 +274,7 @@ public class ADTListJqwikTest {
     // take(n,l) ++ drop(n,l) = l
     @Property
     <A> boolean take_drop(@ForAll("lists") List<A> l, @ForAll int n) {
-        return l.take(n).drop(n) == list();
+        return append(l.take(n),l.drop(n)).equals(l);
 
     }
 
@@ -283,7 +283,7 @@ public class ADTListJqwikTest {
     @Property
     @Report(Reporting.GENERATED)
     <A> boolean takeWhile_dropWhile(@ForAll("lists") List<A> l, @ForAll Function<A, Boolean> f) {
-        return l.takeWhile(f).dropWhile(f) == list();
+        return append(l.takeWhile(f),l.dropWhile(f)).equals(l);
     }
 
     // ∀l: List<A>, ∀f: A → Boolean
