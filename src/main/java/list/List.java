@@ -609,8 +609,9 @@ public abstract class List<A> {
 
     //Aufgabe G Euler1Problem
     public static Integer euler1Problem() {
-        return sum(range(0, 2000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 2000));
+        return sum(range(0, 1000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 1000));
     }
+
 
 
 }
