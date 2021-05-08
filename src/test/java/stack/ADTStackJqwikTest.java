@@ -5,6 +5,7 @@ import list.List;
 import net.jqwik.api.*;
 import tuple.Tuple;
 
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -12,6 +13,7 @@ import static list.JqwikUtils.equalLists;
 import static list.List.list;
 import static org.junit.jupiter.api.Assertions.*;
 import static tuple.Tuple.tuple;
+import static stack.ListStack.*;
 
 public class ADTStackJqwikTest {
 
@@ -86,31 +88,36 @@ public class ADTStackJqwikTest {
 	// isEmpty(empty)	= true
 	@Example
 	boolean isEmpty_empty(){
-		return true;
+
+	    return empty().isEmpty();
 	}
 	
 	// ∀s:Stack<A>, ∀x:A : isEmpty(push(x,s)) = false
 	@Property
 	<A> boolean isEmpty_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x){
-		return true;
+		return !(s.push(x).isEmpty());
+
 	}
 		
 	// ∀s:Stack<A>, ∀x:Integer : top(push(x,s)) = x
 	@Property
 	<A> boolean top_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
-		return false;
+
+	    return s.push(x).top().equals(x);
 	}
 
 	// ∀s:Stack<A>, ∀x:Integer : pop(push(x,s)) = s
 	@Property
 	<A> boolean pop_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
-		return false;
+
+	    return s.push(x).pop().isEqualTo(s);
 	}
 	
 	// ∀s:Stack<A>, ∀x:Integer : popTop(push(x,s)) = (x,s)
 	@Property
 	<A> boolean popTop_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
-		return false;
+
+	    return false;
 	}
 
 	// ∀s:Stack<A> : push(top(s),pop(s))	 = s	, falls s nicht leer
