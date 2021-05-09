@@ -117,13 +117,14 @@ public class ADTStackJqwikTest {
 	@Property
 	<A> boolean popTop_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
 
-	    return false;
+	    return s.push(x).popTop().equals(new Tuple<>(x,s));
 	}
 
 	// ∀s:Stack<A> : push(top(s),pop(s))	 = s	, falls s nicht leer
 	@Property
 	<A> boolean push_top_pop(@ForAll("stacks") Stack<A> s) {
-		return false;
+	    Assume.that(!s.isEmpty());
+        (s.pop().top())
 	}
 	
 	// ∀s:Stack<A> : push(popTop(s))	 = s	, falls s nicht leer
