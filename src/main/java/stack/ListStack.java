@@ -53,6 +53,7 @@ public class ListStack<A> implements Stack<A> {
 
     @Override
     public Stack<A> pushAll(A... es) {
+
         return pushAll(list(es));
     }
 
@@ -78,7 +79,7 @@ public class ListStack<A> implements Stack<A> {
 
     @Override
     public Tuple<List<A>, Stack<A>> popTopAll() {
-        return new Tuple<>(list.reverse(), stack());
+        return new Tuple<>(list.reverse(), stack(list));
     }
 
     @Override
@@ -105,7 +106,7 @@ public class ListStack<A> implements Stack<A> {
 
     public boolean equals(Object o) {
         if (!(o instanceof Stack)) return false;
-        //Stack<A> stack = (Stack) o;
+        //Stack<A> test = (Stack) o;
         return this.isEqualTo((Stack) o);
 
     }

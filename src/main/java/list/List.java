@@ -246,7 +246,7 @@ public abstract class List<A> {
 
         @Override
         public boolean elem(A x) {
-            return x == head ? true : tail.elem(x);
+            return x.equals(head) ? true : tail.elem(x);
         }
 
         @Override
@@ -307,7 +307,7 @@ public abstract class List<A> {
 
         @Override
         public List<A> delete(A x) {
-            return x == head ? tail : new Cons<>(head, (tail.delete(x)));
+            return x.equals(head) ? tail : new Cons<>(head, (tail.delete(x)));
         }
 
         @Override
@@ -412,7 +412,7 @@ public abstract class List<A> {
     public static Integer maximum(List<Integer> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("maximum of empty list");
-        } else if (list.length() == 1) {
+        } else if (list.length() ==  1) {
             return list.head();
         } else {
             return Math.max(list.head(), maximum(list.tail()));
@@ -558,8 +558,8 @@ public abstract class List<A> {
     }
 
     //toString with foldr
-    StringBuilder toStringfoldr(List<A> list) {
-        return foldr(x -> sb -> sb.insert(0, ", ").insert(0, x), new StringBuilder(), list);
+    public static <A> String  toStringfoldr(List<A> list) {
+        return "[" + foldr(x -> y -> x + ", " + y, "NIL",  list) + "]";
     }
 
 
@@ -590,7 +590,7 @@ public abstract class List<A> {
 
     // any x -> x == gesuchtes element list
     public static <A> Boolean elemAnyFoldl(List<A> list, A z) {
-        return foldl(y -> x -> any(b -> b == z || y, list), false, list);
+        return foldl(y -> x -> any(b -> b ==  z || y, list), false, list);
     }
 
 
@@ -613,6 +613,8 @@ public abstract class List<A> {
     public static Integer euler1Problem() {
         return sum(range(0, 1000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 1000));
     }
+
+
 
 
 
