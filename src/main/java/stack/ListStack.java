@@ -14,7 +14,7 @@ public class ListStack<A> implements Stack<A> {
         this.list = List.list();
     }
 
-    private ListStack(List<A> list) {
+    public ListStack(List<A> list) {
         this.list = list;
     }
 
