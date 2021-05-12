@@ -21,56 +21,48 @@ public class Postfix {
         return eval_(stack(), words(s));
     }
 
-    public static double eval_(Stack<Double> s, List<String> expr) {
-        return eval_(s, expr, stack());
-    }
 
-    public static double eval_(Stack<Double> s, List<String> expr, Stack<String> ops) {
-        //Stack<String> ops = stack();
+    public static double eval_(Stack<Double> s, List<String> expr) {
+
         if (expr.isEmpty()) return s.isEmpty() ? 0 : s.top();
 
-        if ("+-*^/!".contains(expr.last())) {
-            if (s.size() == 2) {
-
-            } else {
-                ops = ops.push(expr.last());
-            }
-
+        if ("+-*^/!".contains(expr.head())) {
+            s = berechnung(s, expr.head());
         } else {
-            double d = Double.parseDouble(expr.head());
-            s = s.push(d);
-            if (s.size() == 2) {
-                double res = berechnung(s, ops);
-                s = s.pop().pop().push(res);
-                ops = ops.pop();
-            }
-
+            s = s.push(Double.parseDouble(expr.head()));
         }
+        return eval_(s, expr.tail());
+    }
 
-        return eval_(s, expr.init());
+    public static Stack<Double> berechnung(Stack<Double> s, String ops) {
+        double result = 0;
+        switch (ops) {
+            case ("+"):
+                result = add.apply(s.pop().top()).apply(s.top());
+                break;
+            case ("-"):
+                result = sub.apply(s.pop().top()).apply(s.top());
+                break;
+            case ("*"):
+                result = mul.apply(s.pop().top()).apply(s.top());
+                break;
+            case ("/"):
+                result = div.apply(s.pop().top()).apply(s.top());
+                break;
+            case ("^"):
+                result = pow.apply(s.pop().top()).apply(s.top());
+                break;
+        }
+        return s.pop().push(result);
 
     }
 
-    public static double berechnung(Stack<Double> s, Stack<String> ops) {
-        double result = 0;
-        switch (ops.top()) {
-            case ("+"):
-                result = add.apply(s.top()).apply(s.pop().top());
-                break;
-            case ("-"):
-                result = sub.apply(s.top()).apply(s.pop().top());
-                break;
-            case ("*"):
-                result = mul.apply(s.top()).apply(s.pop().top());
-                break;
-            case ("/"):
-                result = div.apply(s.top()).apply(s.pop().top());
-                break;
-            case ("^"):
-                result = pow.apply(s.top()).apply(s.pop().top());
-                break;
-        }
-        return result;
+
+
+
+
+    public static void main(String[] args) {
+        System.out.println(eval("9 1 -"));
 
     }
 
