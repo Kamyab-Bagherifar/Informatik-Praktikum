@@ -14,7 +14,7 @@ public class Postfix {
     public static final Function<Double, Function<Double, Double>> sub = x -> y -> x - y;
     public static final Function<Double, Function<Double, Double>> mul = x -> y -> x * y;
     public static final Function<Double, Function<Double, Double>> div = x -> y -> x / y;
-    public static final Function<Double, Double> fact = x -> x == 1 || x == 0 ? 0 : x * Postfix.fact.apply(x - 1);
+    public static final Function<Double, Double> fact = x -> x == 1 || x == 0 ? 1 : x * Postfix.fact.apply(x - 1);
     public static final Function<Double, Function<Double, Double>> pow = x -> y -> Math.pow(x, y);
 
     public static double eval(String s) {
@@ -31,6 +31,7 @@ public class Postfix {
         } else {
             s = s.push(Double.parseDouble(expr.head()));
         }
+        System.out.println(s);
         return eval_(s, expr.tail());
     }
 
@@ -52,8 +53,15 @@ public class Postfix {
             case ("^"):
                 result = pow.apply(s.pop().top()).apply(s.top());
                 break;
+            case("!"):
+                result = fact.apply(s.top());
+                //s = s.push(0.0);
+                //break;
+                return s.pop().push(result);
+
+
         }
-        return s.pop().push(result);
+        return s.pop().pop().push(result);
 
     }
 
@@ -62,8 +70,7 @@ public class Postfix {
 
 
     public static void main(String[] args) {
-        System.out.println(eval("9 1 -"));
-
+        System.out.println(eval("4 !"));
     }
 
 
