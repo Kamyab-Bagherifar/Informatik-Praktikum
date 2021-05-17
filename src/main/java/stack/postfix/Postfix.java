@@ -18,7 +18,7 @@ public class Postfix {
     public static final Function<Double, Function<Double, Double>> pow = x -> y -> Math.pow(x, y);
 
     public static double eval(String s) {
-        return eval_(stack(), words(s));
+        return eval_(empty(), words(s));
     }
 
 
@@ -53,7 +53,7 @@ public class Postfix {
             case ("^"):
                 result = pow.apply(s.pop().top()).apply(s.top());
                 break;
-            case("!"):
+            case ("!"):
                 result = fact.apply(s.top());
                 //s = s.push(0.0);
                 //break;
@@ -63,14 +63,6 @@ public class Postfix {
         }
         return s.pop().pop().push(result);
 
-    }
-
-
-
-
-
-    public static void main(String[] args) {
-        System.out.println(eval("4 !"));
     }
 
 

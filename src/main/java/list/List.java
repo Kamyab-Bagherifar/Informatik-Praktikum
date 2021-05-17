@@ -61,11 +61,11 @@ public abstract class List<A> {
 
     public abstract <B> B foldl(Function<B, Function<A, B>> f, B s);
 
+    public abstract List<A> cons(A a);
+
 
     // A.) Grundoperationen, cons = Construct
-    public List<A> cons(A a) {
-        return new Cons<>(a, this);
-    }
+
 
     // A.) Grundoperationen, setHead
     public static <A> List<A> setHead(List<A> list, A h) {
@@ -200,6 +200,10 @@ public abstract class List<A> {
         public boolean equals(Object o) {
             return o instanceof Nil;
         }
+        public List<A> cons(A a) {
+            return new Cons<>(a, this);
+        }
+
 
 
     }
@@ -213,6 +217,10 @@ public abstract class List<A> {
         private Cons(A head, List<A> tail) {
             this.head = head;
             this.tail = tail;
+        }
+
+        public List<A> cons(A a) {
+            return new Cons<>(a, this);
         }
 
         public A head() {

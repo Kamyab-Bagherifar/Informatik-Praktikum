@@ -105,7 +105,7 @@ public class ADTStackJqwikTest {
     @Property
     <A> boolean top_push(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
 
-        return s.push(x).top().equals(x);
+        return s.push(x).top() == x;
     }
 
     // ∀s:Stack<A>, ∀x:Integer : pop(push(x,s)) = s
@@ -170,7 +170,7 @@ public class ADTStackJqwikTest {
     @Property
     <A> boolean toList(@ForAll("stacks") Stack<A> s, @ForAll("as") A x) {
 
-        return s.push(x).toList().equals(append(s.toList(), list(x)));
+        return s.push(x).toList().equals(s.toList().cons(x));
     }
 
     // pop(empty)	= error

@@ -14,7 +14,7 @@ public class ListStack<A> implements Stack<A> {
         this.list = List.list();
     }
 
-    public ListStack(List<A> list) {
+    private ListStack(List<A> list) {
         this.list = list;
     }
 
@@ -22,39 +22,45 @@ public class ListStack<A> implements Stack<A> {
         return new ListStack<>();
     }
 
-    public static <A> Stack<A> stack() {
+    /*public  <A> Stack<A> stack() {
         return new ListStack<>();
     }
 
-    public static <A> Stack<A> stack(List<A> l) {
+    public  <A> Stack<A> stack(List<A> l) {
         return new ListStack<>(l);
     }
 
-    public static <A> Stack<A> stack(A... z) {
+    public  <A> Stack<A> stack(A... z) {
         return new ListStack<>(list(z));
-    }
+    }*/
 
 
     @Override
     public boolean isEmpty() {
         return list.isEmpty();
     }
+    // O(1)
 
     @Override
     public Stack<A> push(A e) {
-        return new ListStack<>(append(list, list(e)));
+        return new ListStack<>(list.cons(e));
     }
+
+    // O(1)
+
 
     @Override
     public Stack<A> pushAll(List<A> xs) {
         return xs.isEmpty() ? this : this.push(xs.head()).pushAll(xs.tail());
 
+    //O(n)
     }
 
     @Override
     public Stack<A> pushAll(A... es) {
 
         return pushAll(list(es));
+    //O(1)
     }
 
     @Override
@@ -62,52 +68,71 @@ public class ListStack<A> implements Stack<A> {
         if (this.isEmpty()) {
             throw new IllegalStateException("pop called on empty stack");
         } else {
-            return stack(this.toList().init());
+            return new ListStack<>(this.toList().tail());
+    //O(1)
         }
 
     }
 
     @Override
     public A top() {
-        return this.toList().last();
+
+        if (this.isEmpty()) {
+            throw new IllegalStateException("pop called on empty stack");
+        }
+        else {
+            return this.toList().head();
+
+        }
+    //O(1)
     }
 
     @Override
     public Tuple<A, Stack<A>> popTop() {
+
         return new Tuple<>(top(), pop());
+    //O(1)
     }
 
     @Override
     public Tuple<List<A>, Stack<A>> popTopAll() {
-        return new Tuple<>(list.reverse(), stack(list));
+
+        return new Tuple<>(list, empty());
+    //O(1)
     }
 
     @Override
     public List<A> toList() {
 
         return list;
+    //O(1)
     }
 
     @Override
     public boolean isEqualTo(Stack<A> s) {
-        return list.isEqualTo(s.toList());
+
+        return list.equals(s.toList());
+    //O(1) -> equals in List.java hat O(n) aber hier läuft nur einaml.
     }
 
     @Override
     public int size() {
+
         return list.length();
+    //O(1) -> length in List.java hat O(n) aber hier läuft nur einaml.
     }
 
 
     @Override
     public String toString() {
+
         return list.toString();
+    //O(1)
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof Stack)) return false;
-        //Stack<A> test = (Stack) o;
-        return this.isEqualTo((Stack) o);
 
+        return this == o || o instanceof Stack && this.isEqualTo((Stack) o);
+    //O(1)
     }
 }
