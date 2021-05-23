@@ -60,7 +60,7 @@ public class ListStack<A> implements Stack<A> {
     public Stack<A> pushAll(A... es) {
 
         return pushAll(list(es));
-    //O(1)
+    //O(n)
     }
 
     @Override
@@ -133,6 +133,6 @@ public class ListStack<A> implements Stack<A> {
     public boolean equals(Object o) {
 
         return this == o || o instanceof Stack && this.isEqualTo((Stack) o);
-    //O(1)
+    //O(n)
     }
 }

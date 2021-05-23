@@ -2,6 +2,7 @@ package set;
 
 import fpinjava.Function;
 import list.List;
+import stack.Stack;
 
 
 public class ListSet<A> implements Set<A> {
@@ -31,12 +32,12 @@ public class ListSet<A> implements Set<A> {
     }
 
     public boolean isEqualTo(Set<A> other) {
-        return set.isEqualTo(other.toList());
+        return this.isSubsetOf(other) && other.isSubsetOf(this);
     }
 
     @Override
     public Set<A> insert(A e) {
-        return set.elem(e) ? fromList(set.map(x -> x == e ? e: x)) : fromList(set.cons(e));
+        return set.elem(e) ? fromList(set.map(x -> x == e ? e : x)) : fromList(set.cons(e));
 
     }
 
@@ -47,7 +48,7 @@ public class ListSet<A> implements Set<A> {
 
     @Override
     public boolean member(A e) {
-        return  set.elem(e);
+        return set.elem(e);
     }
 
     @Override
@@ -70,8 +71,85 @@ public class ListSet<A> implements Set<A> {
         return set;
     }
 
+    //Aufagebe D Part I
+    @Override
+    public boolean any(Function<A, Boolean> p) {
+        return set.any(p);
+    }
+
+    @Override
+    public boolean all(Function<A, Boolean> p) {
+        return set.all(p);
+    }
+
+
+    //Aufgabe D Part II
+    @Override
+    public boolean isSubsetOf(Set<A> s) {
+        return this.all(x -> s.member(x));
+    }
+
+    @Override
+    public boolean disjoint(Set<A> s) {
+        return !s.isEmpty() && !this.isEmpty() && this.all(x -> !s.member(x));
+    }
+
+
+    //Aufgabe G
+    @Override
+    public Set<A> union(Set<A> s) {
+        return s.isEmpty() ? this : this.insert(s.toList().head()).union(fromList(s.toList().tail()));
+    }
+
+    @Override
+    public Set<A> intersection(Set<A> s) {
+        return fromList(this.toList().filter(x -> s.member(x)));
+    }
+
+
+
+    //Aufgabe H
+    public boolean equals(Object o){
+        return this == o || o instanceof Set && this.isEqualTo((Set<A>) o);
+    }
+
+
+    //Aufgabe I
+    public static Set<String> wordSet(String s){
+        Set<String> set = empty();
+        fromList(List.words(s).filter(x-> this))
+        return set;
+
+    }
+
+
+
+
+    //Aufgabe F
+    public static <A, B> B foldr(Function<A, Function<B, B>> f, B s, Set<A> xs) {
+        return xs.toList().foldr(f, s);
+    }
+
+    public static <A, B> B foldl(Function<B, Function<A, B>> f, B s, Set<A> xs) {
+        return xs.toList().foldl(f, s);
+    }
+
+    public static <A> Set<A> filter(Function<A, Boolean> f, Set<A> xs) {
+        return fromList(xs.toList().filter(f));
+    }
+
+    public static <A, B> Set<B> map(Function<A, B> f, Set<A> xs) {
+        return fromList(xs.toList().map(f));
+    }
+
+
+
+
     @Override
     public String toString() {
-        return set.toString();
+
+        return set.isEmpty() ? "{}" : "{" + set.toString().substring(1, set.toString().length() - 6) + "}";
     }
+
+
 }

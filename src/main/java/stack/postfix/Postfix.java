@@ -65,5 +65,9 @@ public class Postfix {
 
     }
 
+    public static void main(String[] args) {
+        System.out.println(eval("2 2 3 ^ ^"));
+    }
+
 
 }
