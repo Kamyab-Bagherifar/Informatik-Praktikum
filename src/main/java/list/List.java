@@ -3,12 +3,15 @@ package list;
 
 import fpinjava.Function;
 import fpinjava.TailCall;
+import set.Set;
 
 import java.lang.reflect.Type;
 
 
 import static fpinjava.TailCall.ret;
 import static fpinjava.TailCall.sus;
+import static set.ListSet.empty;
+import static set.ListSet.fromList;
 
 public abstract class List<A> {
 
@@ -55,6 +58,8 @@ public abstract class List<A> {
     public abstract List<A> delete(A x);
 
     public abstract List<A> reverse();
+    public abstract Set<A> toSet();
+    public abstract List<A> nub();
 
 
     public abstract <B> B foldr(Function<A, Function<B, B>> f, B s);
@@ -183,6 +188,16 @@ public abstract class List<A> {
 
         @Override
         public List<A> reverse() {
+            return list();
+        }
+
+        @Override
+        public Set<A> toSet() {
+            return empty();
+        }
+
+        @Override
+        public List<A> nub() {
             return list();
         }
 
@@ -323,6 +338,16 @@ public abstract class List<A> {
             return append(tail.reverse(), list(head));
         }
 
+        @Override
+        public Set<A> toSet() {
+            return fromList(this);
+        }
+
+        @Override
+        public List<A> nub() {
+            return fromList(this).toList();
+        }
+
 
         @Override
         public <B> B foldr(Function<A, Function<B, B>> f, B s) {
@@ -331,7 +356,7 @@ public abstract class List<A> {
 
         @Override
         public <B> B foldl(Function<B, Function<A, B>> f, B s) {
-            return this.isEmpty() ? s : this.tail().foldl(f, f.apply(s).apply(this.head()));
+            return this.isEmpty() ? s : foldl(f, f.apply(s).apply(this.head()), this.tail());
         }
 
 
@@ -621,6 +646,8 @@ public abstract class List<A> {
     public static Integer euler1Problem() {
         return sum(range(0, 1000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 1000));
     }
+
+
 
 
 

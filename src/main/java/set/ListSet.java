@@ -4,6 +4,8 @@ import fpinjava.Function;
 import list.List;
 import stack.Stack;
 
+import static list.List.*;
+
 
 public class ListSet<A> implements Set<A> {
     private List<A> set;
@@ -23,7 +25,7 @@ public class ListSet<A> implements Set<A> {
     }
 
     public static <A> Set<A> fromList(List<A> list) {
-        return new ListSet<>(list);
+        return list.foldl((x -> y -> x.insert(y)), empty());
     }
 
     @SafeVarargs
@@ -37,7 +39,7 @@ public class ListSet<A> implements Set<A> {
 
     @Override
     public Set<A> insert(A e) {
-        return set.elem(e) ? fromList(set.map(x -> x == e ? e : x)) : fromList(set.cons(e));
+        return set.elem(e) ? new ListSet<>(set.map(x -> x == e ? e : x)) : new ListSet<>(set.cons(e));
 
     }
 
@@ -116,11 +118,11 @@ public class ListSet<A> implements Set<A> {
 
     //Aufgabe I
     public static Set<String> wordSet(String s){
-        Set<String> set = empty();
-        fromList(List.words(s).filter(x-> this))
-        return set;
-
+        return fromList(words(s));
     }
+
+    //Aufgabe J
+
 
 
 
