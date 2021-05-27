@@ -40,37 +40,53 @@ public class ListSet<A> implements Set<A> {
     @Override
     public Set<A> insert(A e) {
         return set.elem(e) ? new ListSet<>(set.map(x -> x == e ? e : x)) : new ListSet<>(set.cons(e));
+        //e ist drinne
+        //BestCase O(1) + O(n) (elem + map)
+        //WorstCase O(n) + O(n) (elem + map)
+        //e ist nicht drinne dann O(n) + O(1) (elem + cons)
 
     }
 
     @Override
     public Set<A> delete(A e) {
         return fromList(set.delete(e));
+        //BestCase (O(n) * O(n+1)) + O(1) (fromList + delete)
+        //WorstCase (O(n) * O(2n) + O(n) (fromList + delete)
     }
 
     @Override
     public boolean member(A e) {
         return set.elem(e);
+        //BestCase O(1)
+        // WorstCase O(n)
     }
 
     @Override
     public int size() {
+
         return set.length();
+        //BestCase O(1)
+        //WorstCase O(n)
     }
 
     @Override
     public boolean isEmpty() {
         return set.isEmpty();
+        //O(1)
     }
 
     @Override
     public A findEq(A e) {
+
         return set.elem(e) ? e : null;
+        //BestCase O(1)
+        // WorstCase O(n)
     }
 
     @Override
     public List<A> toList() {
         return set;
+        //O(1)
     }
 
     //Aufagebe D Part I
@@ -119,9 +135,11 @@ public class ListSet<A> implements Set<A> {
     //Aufgabe I
     public static Set<String> wordSet(String s){
         return fromList(words(s));
+
+        //BestCase (O(n) * O(n+1)) + O(1)
+        //WorstCase (O(n) * O(2n) + O(n)
     }
 
-    //Aufgabe J
 
 
 
@@ -151,6 +169,8 @@ public class ListSet<A> implements Set<A> {
     public String toString() {
 
         return set.isEmpty() ? "{}" : "{" + set.toString().substring(1, set.toString().length() - 6) + "}";
+        // BestCase O(1) wenn es leer ist
+        // O(n) + O(n) + O(n)
     }
 
 
