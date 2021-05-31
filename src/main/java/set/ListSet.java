@@ -8,7 +8,7 @@ import static list.List.*;
 
 
 public class ListSet<A> implements Set<A> {
-    private List<A> set;
+    final private List<A> set;
 
     //Kontruktor
     private ListSet() {
@@ -39,7 +39,7 @@ public class ListSet<A> implements Set<A> {
 
     @Override
     public Set<A> insert(A e) {
-        return set.elem(e) ? new ListSet<>(set.map(x -> x == e ? e : x)) : new ListSet<>(set.cons(e));
+        return set.elem(e) ? new ListSet<A> (set.delete(e).cons(e)) : new ListSet<A>(set.cons(e));
         //e ist drinne
         //BestCase O(1) + O(n) (elem + map)
         //WorstCase O(n) + O(n) (elem + map)
