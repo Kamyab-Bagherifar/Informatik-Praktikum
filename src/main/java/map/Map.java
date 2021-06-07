@@ -12,5 +12,9 @@ public interface Map<K,V>  {
   Map<K,V> insertWith(Function<V, Function<V, V>> f, K key, V value);
   boolean isEqualTo(Map<K, V> o) ;
   boolean isEmpty();
+  int size();
+  boolean member(K key);
+  V get(K key);
+  Set<Entry<K,V>> entrySet();
 
 }

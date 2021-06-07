@@ -78,9 +78,10 @@ public class ListSet<A> implements Set<A> {
     @Override
     public A findEq(A e) {
 
-        return set.elem(e) ? e : null;
+        //return set.elem(e) ? e : null;
         //BestCase O(1)
         // WorstCase O(n)
+        return set.finde(x-> x.equals(e));
     }
 
     @Override

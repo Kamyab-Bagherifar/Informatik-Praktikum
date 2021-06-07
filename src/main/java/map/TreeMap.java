@@ -48,4 +48,24 @@ public class TreeMap<K,V> implements Map<K,V> {
 		return false;
 	}
 
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean member(K key) {
+        return false;
+    }
+
+    @Override
+    public V get(K key) {
+        return null;
+    }
+
+    @Override
+    public Set<Entry<K, V>> entrySet() {
+        return null;
+    }
+
 }
