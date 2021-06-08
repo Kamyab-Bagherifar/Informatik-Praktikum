@@ -3,6 +3,8 @@ package list;
 
 import fpinjava.Function;
 import fpinjava.TailCall;
+import map.ListMap;
+import map.Map;
 import set.Set;
 
 import java.lang.reflect.Type;
@@ -646,6 +648,16 @@ public abstract class List<A> {
     public static Integer euler1Problem() {
         return sum(range(0, 1000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 1000));
     }
+    public <B> Map<B, List<A>> groupBy(Function<A, B> f) {
+        // t sind die einzelende elemente der Liste, mt wäre die Result map
+        return foldr(t -> mt -> mt.insertWith(x-> y -> append(y,x), f.apply(t), list(t)), ListMap.empty());
+    }
+
+    public static void main(String[] args) {
+        List<String> m = list("kamy","Metin", "Denis","kadir");
+        System.out.println(m.groupBy(x-> x.substring(0,1)));
+    }
+
 
 
 

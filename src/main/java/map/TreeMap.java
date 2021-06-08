@@ -68,4 +68,75 @@ public class TreeMap<K,V> implements Map<K,V> {
         return null;
     }
 
+    @Override
+    public <K1, V1> Map<K1, V1> fromEntrySet(Set<Entry<K1, V1>> s) {
+        return null;
+    }
+
+    @Override
+    public List<Tuple<K, V>> toList() {
+        return null;
+    }
+
+    @Override
+    public List<K> keys() {
+        return null;
+    }
+
+    @Override
+    public Set<K> keysSet() {
+        return null;
+    }
+
+    @Override
+    public List<V> elems() {
+        return null;
+    }
+
+    @Override
+    public boolean all(Function<K, Function<V, Boolean>> p) {
+        return false;
+    }
+
+    @Override
+    public boolean allKeys(Function<K, Boolean> p) {
+        return false;
+    }
+
+    @Override
+    public boolean isSubmapOf(Map<K, V> m) {
+        return false;
+    }
+
+    @Override
+    public <V2> V2 foldr(Function<V, Function<V2, V2>> f, V2 s) {
+        return null;
+    }
+
+    @Override
+    public <V2> V2 foldl(Function<V2, Function<V, V2>> f, V2 s) {
+        return null;
+    }
+
+    @Override
+    public Map<K, V> filter(Function<V, Boolean> p) {
+        return null;
+    }
+
+    @Override
+    public <V2> Map<K, V2> map(Function<V, V2> f) {
+        return null;
+    }
+
+    @Override
+    public Map<K, V> union(Map<K, V> m) {
+        return null;
+    }
+
+    @Override
+    public Map<K, V> intersection(Map<K, V> m) {
+        return null;
+    }
+
+
 }
