@@ -1,6 +1,7 @@
 package map;
 
 import fpinjava.Function;
+import fpinjava.Result;
 import list.List;
 import set.Set;
 import set.SortedSet;
@@ -135,6 +136,17 @@ public class TreeMap<K,V> implements Map<K,V> {
 
     @Override
     public Map<K, V> intersection(Map<K, V> m) {
+        return null;
+    }
+
+    @Override
+    public Result<V> lookUp(K key) {
+        return null;
+    }
+
+
+    @Override
+    public Map<K, V> delete(K key) {
         return null;
     }
 

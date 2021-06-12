@@ -1,6 +1,7 @@
 package map;
 
 import fpinjava.Function;
+import fpinjava.Result;
 import list.List;
 import set.Set;
 import tuple.Tuple;
@@ -31,5 +32,7 @@ public interface Map<K,V>  {
     <V2> Map<K,V2> map(Function<V, V2> f);
     Map<K,V> union(Map<K,V> m);
     Map<K,V> intersection(Map<K,V> m);
+    Result<V> lookUp(K key);
+    Map<K,V> delete(K key);
 
 }
