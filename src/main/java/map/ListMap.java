@@ -7,6 +7,8 @@ import set.ListSet;
 import set.Set;
 import tuple.Tuple;
 
+import static java.util.Map.entry;
+
 
 public class ListMap<K, V> implements Map<K, V> {
     private final Set<Entry<K, V>> set;
@@ -81,12 +83,12 @@ public class ListMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean member(K key) {
-        return this.entrySet().member(new Entry<>(key, null));
+        return this.entrySet().member(new Entry(key));
     }
 
     @Override
     public V get(K key) {
-        Entry<K, V> e = set.findEq(new Entry<>(key, null));
+        Entry<K, V> e = set.findEq(new Entry<>(key));
         return e == null ? null : e.value;
 
     }
@@ -193,12 +195,12 @@ public class ListMap<K, V> implements Map<K, V> {
 
     @Override
     public Result <V> lookUp(K key) {
-        return  (V) this.entrySet().findEq(new Entry(key, null)) == null ?  Result.empty() : Result.success((V) this.entrySet().findEq(new Entry(key, null)).value);
+        return  (V) this.entrySet().findEq(new Entry(key)) == null ?  Result.empty() : Result.success((V) this.entrySet().findEq(new Entry(key)).value);
     }
 
     @Override
     public Map<K, V> delete(K key) {
-        return fromSet(this.entrySet().delete(new Entry<>(key, null)));
+        return fromSet(this.entrySet().delete(new Entry(key)));
     }
 
     public static Map<String,Integer> wordMap(String s){
