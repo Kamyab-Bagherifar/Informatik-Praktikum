@@ -58,17 +58,17 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public boolean member(A a) {
-            throw new IllegalStateException("member() called on empty");
+            return false;
         }
 
         @Override
         public int size() {
-            throw new IllegalStateException("size() called on empty");
+            return 0;
         }
 
         @Override
         public int height() {
-            throw new IllegalStateException("height() called on empty");
+            return 0;
         }
 
         @Override
@@ -274,6 +274,7 @@ public abstract class Tree<A extends Comparable<A>> {
         public List<A> inorder() {
             return List.append(List.append(left.inorder(),List.list(value)),right.inorder());
         }
+        //O(n)
 
         @Override
         public List<A> levelorder() {
@@ -300,6 +301,7 @@ public abstract class Tree<A extends Comparable<A>> {
             return left.sizeLeaf() + right.sizeLeaf();
 
         }
+        //O(n)
 
         @Override
         public int sizeInner() {
@@ -308,6 +310,7 @@ public abstract class Tree<A extends Comparable<A>> {
             if(right.isEmpty()) return 1 + left.sizeInner();
             return left.sizeInner() + right.sizeInner() + 1 ;
         }
+        //O(n)
 
         @Override
         public int sizeHalf() {
@@ -316,6 +319,7 @@ public abstract class Tree<A extends Comparable<A>> {
             if(right.isEmpty()) return 1 + left.sizeHalf();
             return left.sizeHalf() + right.sizeHalf();
         }
+        //O(n)
 
         @Override
         public int sizeFull() {
@@ -324,11 +328,13 @@ public abstract class Tree<A extends Comparable<A>> {
             if(right.isEmpty()) return  left.sizeFull();
             return left.sizeHalf() + right.sizeHalf() + 1;
         }
+        //O(n)
 
         @Override
         public int sizeEmpty() {
             return this.sizeLeaf();
         }
+        //O(n)
 
 
         @Override
@@ -361,8 +367,8 @@ public abstract class Tree<A extends Comparable<A>> {
     }
 
     public static void main(String[] args) {
-        List<Integer> test = List.list(4,2,1,3,6,5,7);
-        System.out.println(tree(test).sizeInner());
+        List<Integer> test = List.list(1,2,3,4,5,6,7);
+        System.out.println(tree(test).height());
 
     }
 
