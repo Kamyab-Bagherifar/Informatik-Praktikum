@@ -326,7 +326,7 @@ public abstract class Tree<A extends Comparable<A>> {
             if(left.isEmpty() && right.isEmpty()) return 0;
             if(left.isEmpty()) return  right.sizeFull();
             if(right.isEmpty()) return  left.sizeFull();
-            return left.sizeHalf() + right.sizeHalf() + 1;
+            return left.sizeFull() + right.sizeFull() + 1;
         }
         //O(n)
 
