@@ -14,26 +14,42 @@ public abstract class Tree<A extends Comparable<A>> {
     abstract Tree<A> right();
 
     public abstract Tree<A> insert(A a);
+
     public abstract boolean member(A a);
+
     public abstract int size();
+
     public abstract int height();
+
     public abstract Tree<A> remove(A a);
+
     protected abstract Tree<A> removeMerge(Tree<A> ta);
+
     protected abstract boolean isEmpty();
+
     public abstract A findEq(A x);
+
     public abstract A findMin();
+
     public abstract A findMax();
-    public abstract  List<A> preorder();
-    public abstract  List<A> postorder();
-    public abstract  List<A> inorder();
-    public abstract  List<A> levelorder();
+
+    public abstract List<A> preorder();
+
+    public abstract List<A> postorder();
+
+    public abstract List<A> inorder();
+
+    public abstract List<A> levelorder();
+
     public abstract int sizeLeaf();
+
     public abstract int sizeInner();
+
     public abstract int sizeHalf();
+
     public abstract int sizeFull();
+
     public abstract int sizeEmpty();
-
-
 
 
     private static class Empty<A extends Comparable<A>> extends Tree<A> {
@@ -68,7 +84,7 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public int height() {
-            return 0;
+            return -1;
         }
 
         @Override
@@ -143,7 +159,7 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public int sizeEmpty() {
-            return 0;
+            return 1;
         }
 
         @Override
@@ -191,9 +207,7 @@ public abstract class Tree<A extends Comparable<A>> {
         public boolean member(A a) {
             return a.compareTo(this.value) < 0
                     ? left.member(a)
-                    : a.compareTo(this.value) > 0
-                    ? right.member(a)
-                    : true;
+                    : a.compareTo(this.value) <= 0 || right.member(a);
         }
 
         @Override
@@ -213,7 +227,7 @@ public abstract class Tree<A extends Comparable<A>> {
             } else if (a.compareTo(this.value) > 0) {
                 return new T<>(left, value, right.remove(a));
             } else {
-                return left.removeMerge (right);
+                return left.removeMerge(right);
             }
         }
 
@@ -262,26 +276,26 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public List<A> preorder() {
-            return List.append(List.list(value),List.append(left.preorder(),right.preorder()));
+            return List.append(List.list(value), List.append(left.preorder(), right.preorder()));
         }
 
         @Override
         public List<A> postorder() {
-            return List.append(List.append(left.postorder(),right.postorder()),List.list(value));
+            return List.append(List.append(left.postorder(), right.postorder()), List.list(value));
         }
 
         @Override
         public List<A> inorder() {
-            return List.append(List.append(left.inorder(),List.list(value)),right.inorder());
+            return List.append(List.append(left.inorder(), List.list(value)), right.inorder());
         }
         //O(n)
 
         @Override
         public List<A> levelorder() {
-            if(left.isEmpty() && right.isEmpty()) return List.list(value);
-            if(left.isEmpty()) return  List.append(List.list(value), right.levelorder());
-            if(right.isEmpty()) return List.append(List.list(value), left.levelorder());
-            return List.append(List.list(value), List.append(left.levelorder(),right.levelorder()));
+            if (left.isEmpty() && right.isEmpty()) return List.list(value);
+            if (left.isEmpty()) return List.append(List.list(value), right.levelorder());
+            if (right.isEmpty()) return List.append(List.list(value), left.levelorder());
+            return List.append(List.list(value), List.append(left.levelorder(), right.levelorder()));
             //ich hab im Net geguckt, dass einigen Queue benutzt haben. ich hab zu erst versucht
 
 
@@ -295,38 +309,70 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public int sizeLeaf() {
-            if(left.isEmpty() && right.isEmpty()) return 1;
-            if(left.isEmpty()) return right.sizeLeaf();
-            if(right.isEmpty()) return left.sizeLeaf();
-            return left.sizeLeaf() + right.sizeLeaf();
+            if (left.isEmpty() && right.isEmpty()) {
+                return 1;
+            }
+            else if (left.isEmpty()) {
+                return right.sizeLeaf();
+            }
+            else if (right.isEmpty()) {
+                return left.sizeLeaf();
+            } else {
+                return left.sizeLeaf() + right.sizeLeaf();
+            }
+
 
         }
         //O(n)
 
         @Override
         public int sizeInner() {
-            if(left.isEmpty() && right.isEmpty()) return 0;
-            if(left.isEmpty()) return 1 + right.sizeInner();
-            if(right.isEmpty()) return 1 + left.sizeInner();
-            return left.sizeInner() + right.sizeInner() + 1 ;
+            if (left.isEmpty() && right.isEmpty()){
+                return 0;
+            }
+            else if (left.isEmpty()){
+                return 1 + right.sizeInner();
+            }
+            else if (right.isEmpty()){
+                return 1 + left.sizeInner();
+            }else {
+                return left.sizeInner() + right.sizeInner() + 1;
+            }
+
         }
         //O(n)
 
         @Override
         public int sizeHalf() {
-            if(left.isEmpty() && right.isEmpty()) return 0;
-            if(left.isEmpty()) return 1 + right.sizeHalf();
-            if(right.isEmpty()) return 1 + left.sizeHalf();
-            return left.sizeHalf() + right.sizeHalf();
+            if (left.isEmpty() && right.isEmpty()){
+                return 0;
+            }
+            else if (left.isEmpty()){
+                return 1 + right.sizeHalf();
+            }
+            else if (right.isEmpty()){
+                return 1 + left.sizeHalf();
+            }else{
+                return left.sizeHalf() + right.sizeHalf();
+            }
+
         }
         //O(n)
 
         @Override
         public int sizeFull() {
-            if(left.isEmpty() && right.isEmpty()) return 0;
-            if(left.isEmpty()) return  right.sizeFull();
-            if(right.isEmpty()) return  left.sizeFull();
-            return left.sizeFull() + right.sizeFull() + 1;
+            if (left.isEmpty() && right.isEmpty()){
+                return 0;
+            }
+            else if (left.isEmpty()){
+                return right.sizeFull();
+            }
+            else if (right.isEmpty()){
+                return left.sizeFull();
+            }else{
+                return left.sizeFull() + right.sizeFull() + 1;
+            }
+
         }
         //O(n)
 
@@ -344,7 +390,6 @@ public abstract class Tree<A extends Comparable<A>> {
     }
 
 
-
     @SuppressWarnings("unchecked")
     public static <A extends Comparable<A>> Tree<A> empty() {
         return EMPTY;
@@ -353,29 +398,26 @@ public abstract class Tree<A extends Comparable<A>> {
     public static <A extends Comparable<A>> Tree<A> tree(List<A> list) {
         return list.foldl(t -> t::insert, empty());
     }
+
     @SafeVarargs
     public static <A extends Comparable<A>> Tree<A> tree(A... as) {
         return tree(List.list(as));
     }
 
-    public static <A extends Comparable<A>> A minimum(List<A> list){
-        return tree(list).findMin();
+    public static <A extends Comparable<A>> A minimum(List<A> list) {
+       return minimum(list);
 
     }
-    public static <A extends Comparable<A>> A maximum(List<A> list){
-        return tree(list).findMax();
+
+    public static <A extends Comparable<A>> A maximum(List<A> list) {
+        return maximum(list);
     }
 
     public static void main(String[] args) {
-        List<Integer> test = List.list(1,2,3,4,5,6,7);
+        List<Integer> test = List.list(1, 2, 3, 4, 5, 6, 7);
         System.out.println(tree(test).height());
 
     }
-
-
-
-
-
 
 
 }

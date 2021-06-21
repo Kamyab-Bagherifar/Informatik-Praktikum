@@ -60,7 +60,9 @@ public abstract class List<A> {
     public abstract List<A> delete(A x);
 
     public abstract List<A> reverse();
+
     public abstract Set<A> toSet();
+
     public abstract List<A> nub();
 
 
@@ -217,10 +219,10 @@ public abstract class List<A> {
         public boolean equals(Object o) {
             return o instanceof Nil;
         }
+
         public List<A> cons(A a) {
             return new Cons<>(a, this);
         }
-
 
 
     }
@@ -258,7 +260,7 @@ public abstract class List<A> {
         }
 
         @Override
-        public boolean isEqualTo(List<A> xs){
+        public boolean isEqualTo(List<A> xs) {
 
             return !xs.isEmpty() && head.equals(xs.head()) && tail.isEqualTo(xs.tail());
         }
@@ -372,7 +374,6 @@ public abstract class List<A> {
         }
 
 
-
         public String toString() {
             return String.format("[%sNIL]", toString(new StringBuilder(), this).eval());
         }
@@ -431,28 +432,25 @@ public abstract class List<A> {
     }
 
     //minimum
-    public static Integer minimum(List<Integer> list) {
+    public static <A extends Comparable<A>> A minimum(List<A> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("minimum of empty list");
-        } else if (list.length() == 1) {
-            return list.head();
         } else {
-            return Math.min(list.head(), minimum(list.tail()));
+            return list.foldl(x -> y -> x.compareTo(y) < 0 ? y : x, list.head());
+
         }
 
     }
 
 
     //maximum
-    public static Integer maximum(List<Integer> list) {
+    public static <A extends Comparable<A>> A maximum(List<A> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("maximum of empty list");
-        } else if (list.length() ==  1) {
-            return list.head();
         } else {
-            return Math.max(list.head(), maximum(list.tail()));
-        }
+            return list.foldl(x -> y -> x.compareTo(y) > 0 ? y : x, list.head());
 
+        }
     }
 
 
@@ -593,8 +591,8 @@ public abstract class List<A> {
     }
 
     //toString with foldr
-    public static <A> String  toStringfoldr(List<A> list) {
-        return "[" + foldr(x -> y -> x + ", " + y, "NIL",  list) + "]";
+    public static <A> String toStringfoldr(List<A> list) {
+        return "[" + foldr(x -> y -> x + ", " + y, "NIL", list) + "]";
     }
 
 
@@ -602,7 +600,6 @@ public abstract class List<A> {
     public A lastfoldl() {
         return foldl((x -> y -> list(x).isEmpty() ? this.head() : y), null, this);
     }
-
 
 
     // reverse with foldr
@@ -625,7 +622,7 @@ public abstract class List<A> {
 
     // any x -> x == gesuchtes element list
     public static <A> Boolean elemAnyFoldl(List<A> list, A z) {
-        return foldl(y -> x -> any(b -> b ==  z || y, list), false, list);
+        return foldl(y -> x -> any(b -> b == z || y, list), false, list);
     }
 
 
@@ -648,21 +645,16 @@ public abstract class List<A> {
     public static Integer euler1Problem() {
         return sum(range(0, 1000).filter(x -> x % 3 == 0 || x % 5 == 0 && x < 1000));
     }
+
     public <B> Map<B, List<A>> groupBy(Function<A, B> f) {
         // t sind die einzelende elemente der Liste, mt wäre die Result map
-        return foldr(t -> mt -> mt.insertWith(x-> y -> append(y,x), f.apply(t), list(t)), ListMap.empty());
+        return foldr(t -> mt -> mt.insertWith(x -> y -> append(y, x), f.apply(t), list(t)), ListMap.empty());
     }
 
     public static void main(String[] args) {
-        List<String> m = list("kamy","Metin", "Denis","kadir");
-        System.out.println(m.groupBy(x-> x.substring(0,1)));
+        List<String> m = list("kamy", "Metin", "Denis", "kadir");
+        System.out.println(m.groupBy(x -> x.substring(0, 1)));
     }
-
-
-
-
-
-
 
 
 }
