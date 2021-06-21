@@ -1,6 +1,7 @@
 package tree.bst;
 
 import list.List;
+import list.List.*;
 import net.jqwik.api.*;
 import tree.bst.tree.bst.Tree;
 
@@ -162,7 +163,7 @@ public class TreeJqwikTest {
     @Property
     @FromData("data_for_Min_Max")
     boolean Maximum_Minimum(@ForAll List<Integer> t, @ForAll int min, @ForAll int max) {
-        return maximum(t) == max && minimum(t) == min;
+        return List.maximum(t) == max && List.minimum(t) == min;
     }
 
 

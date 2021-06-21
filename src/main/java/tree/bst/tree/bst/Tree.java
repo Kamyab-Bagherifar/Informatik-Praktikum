@@ -404,20 +404,7 @@ public abstract class Tree<A extends Comparable<A>> {
         return tree(List.list(as));
     }
 
-    public static <A extends Comparable<A>> A minimum(List<A> list) {
-       return minimum(list);
 
-    }
-
-    public static <A extends Comparable<A>> A maximum(List<A> list) {
-        return maximum(list);
-    }
-
-    public static void main(String[] args) {
-        List<Integer> test = List.list(1, 2, 3, 4, 5, 6, 7);
-        System.out.println(tree(test).height());
-
-    }
 
 
 }

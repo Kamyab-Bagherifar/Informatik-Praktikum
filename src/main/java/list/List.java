@@ -436,11 +436,13 @@ public abstract class List<A> {
         if (list.isEmpty()) {
             throw new IllegalStateException("minimum of empty list");
         } else {
-            return list.foldl(x -> y -> x.compareTo(y) < 0 ? y : x, list.head());
+            return list.foldr(x -> y -> x.compareTo(y) > 0 ? y : x, list.head());
 
         }
 
+
     }
+
 
 
     //maximum
@@ -448,10 +450,11 @@ public abstract class List<A> {
         if (list.isEmpty()) {
             throw new IllegalStateException("maximum of empty list");
         } else {
-            return list.foldl(x -> y -> x.compareTo(y) > 0 ? y : x, list.head());
+            return list.foldr(x -> y -> x.compareTo(y) < 0 ? y : x, list.head());
 
         }
     }
+
 
 
     //right fold
@@ -651,10 +654,7 @@ public abstract class List<A> {
         return foldr(t -> mt -> mt.insertWith(x -> y -> append(y, x), f.apply(t), list(t)), ListMap.empty());
     }
 
-    public static void main(String[] args) {
-        List<String> m = list("kamy", "Metin", "Denis", "kadir");
-        System.out.println(m.groupBy(x -> x.substring(0, 1)));
-    }
+
 
 
 }
