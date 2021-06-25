@@ -22,8 +22,7 @@ public class Main {
         //System.out.println(set(1,2,3,4).all(x -> x < 5));
         //System.out.println(set(1,2).isEqualTo(set(1,2)));
         //System.out.println(set(2).disjoint(set(1,2)));
-        System.out.println(foldr((x -> y -> add.apply(x).apply(y)), 0, set(1,2,3,4)));
-        System.out.println(foldl((x -> y -> add.apply(x).apply(y)), 0, set(1,2,3,4)));
+
         //System.out.println(filter((x-> (Integer) x > 2), set(1,2,3,4)));
         // System.out.println("filter:" + list1.filter(x -> x%2 == 1));
         //System.out.println(map(((x-> (Integer) x + 1)), set(10,11,12,13)));

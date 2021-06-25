@@ -1,5 +1,6 @@
 package set;
 
+import fpinjava.Result;
 import list.JqwikUtils;
 import list.List;
 import net.jqwik.api.*;
@@ -266,4 +267,22 @@ public abstract class ADTSetJqwikTest {
 		//Mit Listen umgesetzt
         return append(append(a.toList(),b.toList()), c.toList()).toSet().isEqualTo((a.union(b).union(c)));
 	}
+
+    @Property
+    public <A> boolean testLookupEq1(@ForAll("sets") Set<A> s, @ForAll("as") A x, @ForAll("as") A y) {
+        if(x.equals(y))
+            return s.insert(x).lookupEq(y).toString().equals(Result.success(x).toString());
+        else
+            return s.insert(x).lookupEq(y).toString().equals(s.lookupEq(y).toString());
+    }
+
+    //  lookupEq(delete(x,s),y)  =  x=y ? Result.empty()    : lookupEq(s,y)
+    @Property
+    public <A> boolean testLookupEq2(@ForAll("sets") Set<A> s, @ForAll("as") A x, @ForAll("as") A y) {
+        Assume.that(!s.isEmpty());
+        if(x.equals(y))
+            return s.delete(x).lookupEq(y).toString().equals(Result.empty().toString());
+        else
+            return s.delete(x).lookupEq(y).toString().equals(s.lookupEq(y).toString());
+    }
 }

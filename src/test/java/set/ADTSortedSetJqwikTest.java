@@ -1,6 +1,7 @@
 package set;
 
 import list.List;
+import net.jqwik.api.Assume;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
@@ -19,7 +20,8 @@ public abstract class ADTSortedSetJqwikTest extends ADTSetJqwikTest {
 	// ∀s: SortedSet<A> :  any(x → x==findMin(s),s)   = true, falls s nicht leer
 	@Property
 	<A extends Comparable<A>> boolean findMin_any(@ForAll("sets") SortedSet<A> s){
-		return  false;
+        Assume.that(!s.isEmpty());
+	    return  false;
 	}
 
 	// ∀s: SortedSet<A> :  all(x → x>=findMin(s),s)   = true, falls s nicht leer

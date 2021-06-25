@@ -152,14 +152,14 @@ public class ListMap<K, V> implements Map<K, V> {
 
     @Override
     public <V2> V2 foldr(Function<V, Function<V2, V2>> f, V2 s) {
-       return ListSet.foldr(x-> y -> f.apply(x.value).apply(y),s,this.entrySet());
+       return this.entrySet().foldr(x-> y -> f.apply(x.value).apply(y),s,this.entrySet());
     }
     //WorstCase: O(n)(foldr) + O(1) (EntrySet)
     //BestCase: O(1)(foldr) + O(1) (EntrySet)
 
     @Override
     public <V2> V2 foldl(Function<V2, Function<V, V2>> f, V2 s) {
-        return ListSet.foldl(x-> y -> f.apply(x).apply(y.value), s, this.entrySet());
+        return this.entrySet().foldl(x-> y -> f.apply(x).apply(y.value), s, this.entrySet());
     }
     //WorstCase: O(n)(foldr) + O(1) (EntrySet)
     //BestCase: O(1)(foldr) + O(1) (EntrySet)
@@ -167,14 +167,14 @@ public class ListMap<K, V> implements Map<K, V> {
 
     @Override
     public Map<K, V> filter(Function<V, Boolean> p) {
-        return fromSet(ListSet.filter(x-> p.apply(x.value), this.entrySet()));
+        return fromSet(this.entrySet().filter(x-> p.apply(x.value), this.entrySet()));
     }
     //WorstCase: O(1) + O(n)(filter) + O(1)(entrySet)
     //BestCase: O(1) + O(1)(filter) + O(1)(entrySet)
 
     @Override
     public <V2> Map<K, V2> map(Function<V, V2> f) {
-        return fromSet(ListSet.map(x-> new Entry<>(x.key, f.apply(x.value)), this.entrySet()));
+        return fromSet(this.entrySet().map(x-> new Entry<>(x.key, f.apply(x.value)), this.entrySet()));
     }
     //WorstCase: O(1) + O(n)(map) + O(1)(entrySet)
     //BestCase: O(1) + O(1)(map) + O(1)(entrySet)

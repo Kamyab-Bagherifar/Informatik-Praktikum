@@ -1,6 +1,7 @@
 package tree.bst.tree.bst;
 
 
+import fpinjava.Result;
 import list.List;
 
 public abstract class Tree<A extends Comparable<A>> {
@@ -21,11 +22,11 @@ public abstract class Tree<A extends Comparable<A>> {
 
     public abstract int height();
 
-    public abstract Tree<A> remove(A a);
+    public abstract Tree<A> delete(A a);
 
     protected abstract Tree<A> removeMerge(Tree<A> ta);
 
-    protected abstract boolean isEmpty();
+    public abstract boolean isEmpty();
 
     public abstract A findEq(A x);
 
@@ -50,6 +51,7 @@ public abstract class Tree<A extends Comparable<A>> {
     public abstract int sizeFull();
 
     public abstract int sizeEmpty();
+    public abstract Result<A> lookupEq(A x);
 
 
     private static class Empty<A extends Comparable<A>> extends Tree<A> {
@@ -88,8 +90,8 @@ public abstract class Tree<A extends Comparable<A>> {
         }
 
         @Override
-        public Tree<A> remove(A a) {
-            throw new IllegalStateException("remove() called on empty");
+        public Tree<A> delete(A a) {
+            return this;
         }
 
         @Override
@@ -98,13 +100,13 @@ public abstract class Tree<A extends Comparable<A>> {
         }
 
         @Override
-        protected boolean isEmpty() {
+        public boolean isEmpty() {
             return true;
         }
 
         @Override
         public A findEq(A x) {
-            throw new IllegalStateException("findEq called on empty");
+            return null;
         }
 
         @Override
@@ -160,6 +162,11 @@ public abstract class Tree<A extends Comparable<A>> {
         @Override
         public int sizeEmpty() {
             return 1;
+        }
+
+        @Override
+        public Result<A> lookupEq(A x) {
+            return Result.failure("called on empty Tree");
         }
 
         @Override
@@ -221,11 +228,11 @@ public abstract class Tree<A extends Comparable<A>> {
         }
 
         @Override
-        public Tree<A> remove(A a) {
+        public Tree<A> delete(A a) {
             if (a.compareTo(this.value) < 0) {
-                return new T<>(left.remove(a), value, right);
+                return new T<>(left.delete(a), value, right);
             } else if (a.compareTo(this.value) > 0) {
-                return new T<>(left, value, right.remove(a));
+                return new T<>(left, value, right.delete(a));
             } else {
                 return left.removeMerge(right);
             }
@@ -245,7 +252,7 @@ public abstract class Tree<A extends Comparable<A>> {
         }
 
         @Override
-        protected boolean isEmpty() {
+        public boolean isEmpty() {
             return false;
         }
 
@@ -380,6 +387,11 @@ public abstract class Tree<A extends Comparable<A>> {
         public int sizeEmpty() {
             return this.sizeLeaf();
         }
+
+        @Override
+        public Result<A> lookupEq(A x) {
+            return findEq(x) == null ? Result.failure("not found") : Result.success(x);
+        }
         //O(n)
 
 
@@ -402,6 +414,11 @@ public abstract class Tree<A extends Comparable<A>> {
     @SafeVarargs
     public static <A extends Comparable<A>> Tree<A> tree(A... as) {
         return tree(List.list(as));
+    }
+
+    public static void main(String[] args) {
+        Tree<Integer> test = tree(6,3,5,9,1,7,2);
+        System.out.println(test.inorder());
     }
 
 

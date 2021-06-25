@@ -42,7 +42,7 @@ public class TreeJqwikTest {
     @Property
     @FromData("tree_data_test")
     boolean Remove_Member(@ForAll Tree<Integer> t, @ForAll int isMember, @ForAll int isNotMember) {
-        return !t.remove(isMember).member(isMember);
+        return !t.delete(isMember).member(isMember);
     }
 
     @Property

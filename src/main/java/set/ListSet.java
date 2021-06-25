@@ -1,6 +1,7 @@
 package set;
 
 import fpinjava.Function;
+import fpinjava.Result;
 import list.List;
 import stack.Stack;
 
@@ -125,6 +126,31 @@ public class ListSet<A> implements Set<A> {
         return fromList(this.toList().filter(x -> s.member(x)));
     }
 
+    @Override
+    public <B> B foldr(Function<A, Function<B, B>> f, B s, Set<A> xs) {
+        return xs.toList().foldr(f, s);
+    }
+
+    @Override
+    public <B> B foldl(Function<B, Function<A, B>> f, B s, Set<A> xs) {
+        return xs.toList().foldl(f,s);
+    }
+
+    @Override
+    public Set<A> filter(Function<A, Boolean> f, Set<A> xs) {
+        return (xs.toList().filter(f)).toSet();
+    }
+
+    @Override
+    public <B> Set<B> map(Function<A, B> f, Set<A> xs) {
+        return (xs.toList().map(f)).toSet();
+    }
+
+    @Override
+    public Result<A> lookupEq(A x) {
+        return findEq(x) == null ? Result.failure("not found") : Result.success(x);
+    }
+
 
 
     //Aufgabe H
@@ -147,7 +173,7 @@ public class ListSet<A> implements Set<A> {
 
 
     //Aufgabe F
-    public static <A, B> B foldr(Function<A, Function<B, B>> f, B s, Set<A> xs) {
+    /*ublic static <A, B> B foldr(Function<A, Function<B, B>> f, B s, Set<A> xs) {
         return xs.toList().foldr(f, s);
     }
 
@@ -161,7 +187,7 @@ public class ListSet<A> implements Set<A> {
 
     public static <A, B> Set<B> map(Function<A, B> f, Set<A> xs) {
         return fromList(xs.toList().map(f));
-    }
+    }*/
 
 
 

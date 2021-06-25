@@ -2,6 +2,7 @@ package list;
 
 
 import fpinjava.Function;
+import fpinjava.Result;
 import fpinjava.TailCall;
 import map.ListMap;
 import map.Map;
@@ -71,6 +72,8 @@ public abstract class List<A> {
     public abstract <B> B foldl(Function<B, Function<A, B>> f, B s);
 
     public abstract List<A> cons(A a);
+    public abstract Result<A> headOption();
+    public abstract  Result<A> find(Function<A,Boolean> p);
 
 
     // A.) Grundoperationen, cons = Construct
@@ -224,6 +227,16 @@ public abstract class List<A> {
             return new Cons<>(a, this);
         }
 
+        @Override
+        public Result<A> headOption() {
+            return Result.empty();
+        }
+
+        @Override
+        public Result<A> find(Function<A, Boolean> p) {
+            return Result.failure("called on empty list");
+        }
+
 
     }
 
@@ -240,6 +253,16 @@ public abstract class List<A> {
 
         public List<A> cons(A a) {
             return new Cons<>(a, this);
+        }
+
+        @Override
+        public Result<A> headOption() {
+            return Result.success(head);
+        }
+
+        @Override
+        public Result<A> find(Function<A, Boolean> p) {
+            return this.finde(p) == null ? Result.failure("not found") : Result.success(this.finde(p));
         }
 
         public A head() {
