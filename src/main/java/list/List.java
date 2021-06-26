@@ -262,7 +262,7 @@ public abstract class List<A> {
 
         @Override
         public Result<A> find(Function<A, Boolean> p) {
-            return this.finde(p) == null ? Result.failure("not found") : Result.success(this.finde(p));
+            return this.finde(p) == null ? Result.empty() : Result.success(this.finde(p));
         }
 
         public A head() {

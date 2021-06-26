@@ -4,6 +4,8 @@ package tree.bst.tree.bst;
 import fpinjava.Result;
 import list.List;
 
+import java.sql.PreparedStatement;
+
 public abstract class Tree<A extends Comparable<A>> {
     @SuppressWarnings("rawtypes")
     private final static Tree EMPTY = new Empty();
@@ -52,6 +54,8 @@ public abstract class Tree<A extends Comparable<A>> {
 
     public abstract int sizeEmpty();
     public abstract Result<A> lookupEq(A x);
+    public abstract Result<A> lookupMax();
+    public abstract Result<A> lookupMin();
 
 
     private static class Empty<A extends Comparable<A>> extends Tree<A> {
@@ -167,6 +171,16 @@ public abstract class Tree<A extends Comparable<A>> {
         @Override
         public Result<A> lookupEq(A x) {
             return Result.failure("called on empty Tree");
+        }
+
+        @Override
+        public Result<A> lookupMax() {
+            return Result.empty();
+        }
+
+        @Override
+        public Result<A> lookupMin() {
+            return Result.empty();
         }
 
         @Override
@@ -390,8 +404,19 @@ public abstract class Tree<A extends Comparable<A>> {
 
         @Override
         public Result<A> lookupEq(A x) {
-            return findEq(x) == null ? Result.failure("not found") : Result.success(x);
+            return findEq(x) == null ? Result.empty() : Result.success(x);
         }
+
+        @Override
+        public Result<A> lookupMax() {
+            return Result.success(this.findMax());
+        }
+
+        @Override
+        public Result<A> lookupMin() {
+            return Result.success(this.findMin());
+        }
+
         //O(n)
 
 

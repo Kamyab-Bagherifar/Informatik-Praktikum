@@ -148,8 +148,9 @@ public class ListSet<A> implements Set<A> {
 
     @Override
     public Result<A> lookupEq(A x) {
-        return findEq(x) == null ? Result.failure("not found") : Result.success(x);
+        return findEq(x) == null ? Result.empty() : Result.success(x);
     }
+
 
 
 

@@ -130,7 +130,7 @@ public class TreeSet<A extends Comparable<A>> implements SortedSet<A> {
 
     @Override
     public Result<A> lookupEq(A x) {
-        return findEq(x) == null ? Result.failure("not found") : Result.success(x);
+        return findEq(x) == null ? Result.empty(): Result.success(x);
     }
 
 
@@ -144,6 +144,15 @@ public class TreeSet<A extends Comparable<A>> implements SortedSet<A> {
         return tree.findMin();
     }
 
+    @Override
+    public Result<A> lookupMax() {
+        return tree.lookupMax();
+    }
+
+    @Override
+    public Result<A> lookupMin() {
+        return tree.lookupMin();
+    }
 
 
     @Override
